@@ -1,17 +1,18 @@
-const Account = require('../models/account_model');
+const UserSchema = require('../models/user_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
 signUp = (req, res) => {
-    let {username, email, password} = req.body; // this is called destructuring. We're extracting these variables and their values from 'req.body'
+    let {firstname, lastname, email, passwordHash} = req.body; // this is called destructuring. We're extracting these variables and their values from 'req.body'
 
     let userData = {
-        username,
-        password: bcrypt.hashSync(password, 5), // we are using bcrypt to hash our password before saving it to the database
+        firstname,
+        lastname,
+        passwordHash: bcrypt.hashSync(passwordHash, 5), // we are using bcrypt to hash our password before saving it to the database
         email
     };
 
-    let newUser = new Account(userData);
+    let newUser = new UserSchema(userData);
     newUser.save().then(error => {
         if (!error) {
             return res.status(201).json('signup successful')
@@ -31,14 +32,15 @@ signUp = (req, res) => {
 =============
 */
 logIn = (req, res) => {
-  let {username, password} = req.body;
-    Account.findOne({username: username}, 'username email password', (err, userData) => {
+  let {email, password} = req.body;
+    UserSchema.findOne({email: email}, 'firstname lastname email password', (err, userData) => {
     	if (!err) {
         	let passwordCheck = bcrypt.compareSync(password, userData.password);
         	if (passwordCheck) { // we are using bcrypt to check the password hash from db against the supplied password by user
                 req.session.user = {
                   email: userData.email,
-                  username: userData.username,
+                  firstname: userData.firstname,
+                  lastname: userData.lastname,
                   id: userData._id
                 }; // saving some user's data into user's session
                 req.session.user.expires = new Date(
