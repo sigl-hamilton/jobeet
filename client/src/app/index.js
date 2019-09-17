@@ -14,11 +14,7 @@ function App() {
             <Switch>
                 <Route path="/jobs/list" exact component={JobsList} />
                 <Route path="/jobs/create" exact component={JobsInsert} />
-                <Route
-                    path="/jobs/update/:id"
-                    exact
-                    component={JobsUpdate}
-                />
+                <Route path="/jobs/update/:id" exact component={JobsUpdate} />
             </Switch>
         </Router>
     )
