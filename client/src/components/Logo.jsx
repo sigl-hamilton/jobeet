@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
@@ -11,9 +11,9 @@ const Wrapper = styled.a.attrs({
 class Logo extends Component {
     render() {
         return (
-            <Wrapper href="https://sambarros.com">
+            <Link to="/" className="navbar-brand">
                 <img src={logo} width="50" height="50" alt="sambarros.com" />
-            </Wrapper>
+            </Link>
         )
     }
 }

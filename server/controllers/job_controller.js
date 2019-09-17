@@ -1,4 +1,3 @@
-
 const Job = require('../models/job_model')
 
 createJob = (req, res) => {
