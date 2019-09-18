@@ -40,5 +40,5 @@ const AdminUserSchema = extendSchema(UserSchema, {
 });
 
 module.exports = mongoose.model('users', UserSchema);
-module.exports = mongoose.model('admins', CandidateUserSchema);
+module.exports = mongoose.model('candidates', CandidateUserSchema);
 module.exports = mongoose.model('recruiters', RecruiterUserSchema);

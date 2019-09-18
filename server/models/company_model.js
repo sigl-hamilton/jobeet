@@ -7,7 +7,7 @@ const CompanySchema = new Schema(
         name: { type: String, required: true },
         description: { type: String, required: true },
         logo: { type: String, required: true },
-        recruiters: [{type: mongoose.Schema.Types.ObjectId,ref: 'RecruiterUserSchema'}],
+        recruiters: [{type: mongoose.Schema.Types.ObjectId, ref: 'RecruiterUserSchema'}],
   //      recruiters: { type: [RecruiterUserSchema] },
     },
     { timestamps: true },
