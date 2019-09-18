@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const extendSchema = require('mongoose-extend-schema');
 const Schema = mongoose.Schema;
-const JobSchema = require('mongoose').model('Job');
-const CompanySchema = require('mongoose').model('CompanySchema');
+//var JobSchema = new mongoose.model('jobs');
+//const CompanySchema = mongoose.model('companies');
 
 const UserSchema = new Schema(
     {
@@ -18,7 +18,10 @@ const UserSchema = new Schema(
 
 const CandidateUserSchema = extendSchema(UserSchema, {
     cv: {type: String, required: true},
-    jobs: {type: [JobSchema]},
+    jobs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job'
+    }],
     job_status: {
         type: String,
         enum: ['ACTIVE', 'PASSIVE', 'INACTIVE'],
@@ -27,14 +30,15 @@ const CandidateUserSchema = extendSchema(UserSchema, {
 });
 
 const RecruiterUserSchema = extendSchema(UserSchema, {
-    company: {type: CompanySchema},
-    jobs: {type: [JobSchema]},
+   // company: {type: CompanySchema},
+    company: {type: mongoose.Schema.Types.ObjectId, ref: 'CompanySchema'},
+    jobs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Job'}],
 });
 
 const AdminUserSchema = extendSchema(UserSchema, {
 
 });
 
-module.export = mongoose.model('users', UserSchema);
-module.export = mongoose.model('admins', CandidateUserSchema);
-module.export = mongoose.model('recruiters', RecruiterUserSchema);
+module.exports = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('admins', CandidateUserSchema);
+module.exports = mongoose.model('recruiters', RecruiterUserSchema);

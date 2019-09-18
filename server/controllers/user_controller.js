@@ -32,10 +32,10 @@ signUp = (req, res) => {
 =============
 */
 logIn = (req, res) => {
-  let {email, password} = req.body;
-    UserSchema.findOne({email: email}, 'firstname lastname email password', (err, userData) => {
+  let {email, passwordHash} = req.body;
+    UserSchema.findOne({email: email}, 'firstname lastname email passwordHash', (err, userData) => {
     	if (!err) {
-        	let passwordCheck = bcrypt.compareSync(password, userData.password);
+        	let passwordCheck = bcrypt.compareSync(passwordHash, userData.passwordHash);
         	if (passwordCheck) { // we are using bcrypt to check the password hash from db against the supplied password by user
                 req.session.user = {
                   email: userData.email,
@@ -56,7 +56,23 @@ logIn = (req, res) => {
     })
 }
 
+getProfilById = (req, res) => {
+    let id = req.params.id;
+    UserSchema.findOne(id, function(err, todo) {
+        res.json(todo);
+    });
+};
+
+getProfilByEmail = (req, res) => {
+    let email = req.params.email;
+    UserSchema.findByEmail({email: email}, function(err, userData) {
+        res.json(userData);
+    });
+};
+
 module.exports = {
     signUp,
-    logIn
-}
+    logIn,
+    getProfilById,
+    getProfilByEmail
+};

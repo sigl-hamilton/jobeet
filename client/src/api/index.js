@@ -9,6 +9,7 @@ export const getAllJobs = () => api.get(`/job/list`)
 export const updateJobById = (id, payload) => api.put(`/job/${id}`, payload)
 export const deleteJobById = id => api.delete(`/job/${id}`)
 export const getJobById = id => api.get(`/job/${id}`)
+export const getProfilById = id => api.get(`/profil/${id}`)
 
 const apis = {
     insertJob,
