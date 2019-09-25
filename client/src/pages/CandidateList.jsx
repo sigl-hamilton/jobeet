@@ -2,17 +2,13 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import api from '../api'
-import {Candidate} from '../components'
+import {CandidateLine} from '../components'
 
 import styled from 'styled-components'
 import 'react-table/react-table.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Container from "react-bootstrap/Container";
-
-
-
-const Wrapper = styled.div`padding: 0 40px 40px 40px;`;
 
 class CandidateList extends Component {
     constructor(props) {
@@ -45,12 +41,13 @@ class CandidateList extends Component {
         return (
             <Container>
                 {candidates.map(x =>
-                    <Candidate
+                    <CandidateLine
                         firstname={x.firstname}
                         lastname={x.lastname}
                         phone={x.phone}
                         description={x.description}
                         job_status={x.job_status}
+                        id = {x._id}
                         //               labels={x.labels}
                     />
                     )}

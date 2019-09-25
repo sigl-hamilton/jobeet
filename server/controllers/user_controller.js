@@ -1,3 +1,4 @@
+
 const UserSchema = require('../models/user_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
@@ -17,7 +18,7 @@ signUp = (req, res) => {
         if (!error) {
             return res.status(201).json('signup successful')
         } else {
-            if (error.code ===  11000) { // this error gets thrown only if similar user record already exist.
+            if (error.code === 11000) { // this error gets thrown only if similar user record already exist.
                 return res.status(409).send('user already exist!')
             } else {
                 console.log(JSON.stringify(error, null, 2)); // you might want to do this to examine and trace where the problem is emanating from
@@ -25,7 +26,7 @@ signUp = (req, res) => {
             }
         }
     })
-}
+};
 
 /*
 2. User Sign in
@@ -54,13 +55,22 @@ logIn = (req, res) => {
         	res.status(401).send('invalid login credentials')
         }
     })
-}
+};
 
-getProfilById = (req, res) => {
+getUserById = (req, res) => {
     let id = req.params.id;
-    UserSchema.findOne(id, function(err, todo) {
-        res.json(todo);
-    });
+    UserSchema.findOne({ id: req.params.id }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        }
+        return res.status(200).json({ success: true, data: user })
+    }).catch(err => console.log(err));
 };
 
 getProfilByEmail = (req, res) => {
@@ -82,12 +92,48 @@ getUsers = async (req, res) => {
         }
         return res.status(200).json({ success: true, data: users })
     }).catch(err => console.log(err))
-}
+};
+/*
+getCandidateByEmail = (req, res) => {
+    let email = req.params.email;
+    UserSchema.findOne({email: email}, function(err, userData) {
+        res.json(userData);
+    });
+};
+*/
+getCandidateById =  (req, res) => {
+    UserSchema.findOne({ id: req.params.id , "user_type" : "CANDIDATE"}, (err, candidate) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!candidate) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Candidate not found` })
+        }
+        return res.status(200).json({ success: true, data: candidate })
+    }).catch(err => console.log(err))
+};
+
+const getCandidates =  (req, res) => {
+    UserSchema.find({"user_type" : "CANDIDATE"}, (err, candidate) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!candidate.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Candidate not found` })
+        }
+        return res.status(200).json({ success: true, data: candidate })
+    }).catch(err => console.log(err))
+};
 
 module.exports = {
     signUp,
     logIn,
-    getProfilById,
     getProfilByEmail,
-    getUsers
+    getUserById,
+    getCandidates,
+    getCandidateById
 };

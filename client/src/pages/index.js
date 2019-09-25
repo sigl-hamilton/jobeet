@@ -6,5 +6,6 @@ import SignUp from './SignUp'
 import LogIn from './LogIn'
 
 import CandidateList from "./CandidateList";
+import UserProfile from "./UserProfile";
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList }
+export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, UserProfile}
