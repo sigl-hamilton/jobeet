@@ -1,8 +1,10 @@
-
 const UserSchema = require('../models/user_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const passport = require('passport');
 
+
+/*
 signUp = (req, res) => {
     let {firstname, lastname, email, passwordHash} = req.body; // this is called destructuring. We're extracting these variables and their values from 'req.body'
 
@@ -27,11 +29,11 @@ signUp = (req, res) => {
         }
     })
 };
-
+*/
 /*
 2. User Sign in
 =============
-*/
+
 logIn = (req, res) => {
   let {email, passwordHash} = req.body;
     UserSchema.findOne({email: email}, 'firstname lastname email passwordHash', (err, userData) => {
@@ -56,14 +58,13 @@ logIn = (req, res) => {
         }
     })
 };
-
+*/
 getUserById = (req, res) => {
     let id = req.params.id;
     UserSchema.findOne({ id: req.params.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-
         if (!user) {
             return res
                 .status(404)
@@ -130,8 +131,9 @@ const getCandidates =  (req, res) => {
 };
 
 module.exports = {
-    signUp,
-    logIn,
+  //  signUp,
+    //register,
+    //logIn,
     getProfilByEmail,
     getUserById,
     getCandidates,
