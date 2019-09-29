@@ -13,6 +13,8 @@ export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
 //export const getCandidateById = id => api.get(`/candidate/${id}`);
 export const getUserById = id => api.get(`/user/${id}`);
+export const register = newUser => api.post(`/register`, newUser);
+export const login = newUser => api.post(`/login`, newUser);
 
 const apis = {
     insertJob,
@@ -22,6 +24,8 @@ const apis = {
     getJobById,
     getUserById,
     getCandidates,
+    register,
+    login
 //    getCandidateById
 };
 

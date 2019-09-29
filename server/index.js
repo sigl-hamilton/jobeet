@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const cookieParser = require('cookie-parser');
 const UserSchema = require('./models/user_model');
+const UserCtrl = require('./controllers/user_controller');
 const passport = require('passport');
 
 const cors = require('cors');
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', router);
 
-app.post('/register', function(req, res) {
+app.post('/api/register', function(req, res) {
     console.log('REGISTER');
     const password = req.body.password;
     const password2 = req.body.password2;
@@ -60,13 +61,12 @@ app.post('/register', function(req, res) {
 });
 
 const LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(
-    function(email, password, done) {
-        console.log('LOL');
-        UserSchema.getUserByEmail(email, function(err, user){
+passport.use(new LocalStrategy (
+    {usernameField: 'email'},
+    function(username, password, done) {
+        UserCtrl.getUserByEmail(username, function(err, user){
             if(err) throw err;
             if(!user) { return done(null, false, {message: 'Unknown User'}); }
-            console.log(user);
             UserSchema.comparePassword(password, user.password, function(err, isMatch){
                 if(err) throw err;
                 if(isMatch){
@@ -84,12 +84,12 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    UserSchema.getUserById(id, function(err, user) {
+    UserCtrl.getUserById(id, function(err, user) {
         done(err, user);
     });
 });
 
-app.post('/login',
+app.post('/api/login',
     passport.authenticate('local'),
     function(req, res) {
         console.log("LOGIN");

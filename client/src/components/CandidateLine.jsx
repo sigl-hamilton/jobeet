@@ -1,19 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {JobsUpdate} from "../pages";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Route } from 'react-router-dom'
 
-
-const BOX_STYLE = {
-    border: "2px solid black",
-    display: "block",
-    margin: "15px auto",
-    //width: "70%",
-    borderRadius: "15px",
-    //padding: "4px"
-}
 
 class CandidateLine extends Component {
     constructor(props) {
