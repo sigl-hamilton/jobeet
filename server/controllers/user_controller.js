@@ -1,8 +1,10 @@
-
 const UserSchema = require('../models/user_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const passport = require('passport');
 
+
+/*
 signUp = (req, res) => {
     let {firstname, lastname, email, passwordHash} = req.body; // this is called destructuring. We're extracting these variables and their values from 'req.body'
 
@@ -27,11 +29,11 @@ signUp = (req, res) => {
         }
     })
 };
-
+*/
 /*
 2. User Sign in
 =============
-*/
+
 logIn = (req, res) => {
   let {email, passwordHash} = req.body;
     UserSchema.findOne({email: email}, 'firstname lastname email passwordHash', (err, userData) => {
@@ -56,14 +58,14 @@ logIn = (req, res) => {
         }
     })
 };
-
+*/
+/*
 getUserById = (req, res) => {
     let id = req.params.id;
     UserSchema.findOne({ id: req.params.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-
         if (!user) {
             return res
                 .status(404)
@@ -72,12 +74,21 @@ getUserById = (req, res) => {
         return res.status(200).json({ success: true, data: user })
     }).catch(err => console.log(err));
 };
+*/
+/*
+module.exports.getUserByEmail = function(email, callback){
+    var query = {email: email};
+    console.log('MODEL');
+    UserSchema.findOne(query, callback);
+};
+*/
+getUserByEmail = (email, callback) => {
+    var query = {email: email};
+    UserSchema.findOne(query, callback);
+};
 
-getProfilByEmail = (req, res) => {
-    let email = req.params.email;
-    UserSchema.findOne({email: email}, function(err, userData) {
-        res.json(userData);
-    });
+getUserById = function(id, callback){
+    UserSchema.findById(id, callback);
 };
 
 getUsers = async (req, res) => {
@@ -93,14 +104,7 @@ getUsers = async (req, res) => {
         return res.status(200).json({ success: true, data: users })
     }).catch(err => console.log(err))
 };
-/*
-getCandidateByEmail = (req, res) => {
-    let email = req.params.email;
-    UserSchema.findOne({email: email}, function(err, userData) {
-        res.json(userData);
-    });
-};
-*/
+
 getCandidateById =  (req, res) => {
     UserSchema.findOne({ id: req.params.id , "user_type" : "CANDIDATE"}, (err, candidate) => {
         if (err) {
@@ -130,9 +134,10 @@ const getCandidates =  (req, res) => {
 };
 
 module.exports = {
-    signUp,
-    logIn,
-    getProfilByEmail,
+  //  signUp,
+    //register,
+    //logIn,
+    getUserByEmail,
     getUserById,
     getCandidates,
     getCandidateById

@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react'
-import ReactTable from 'react-table'
 import api from '../api'
 import {Job} from '../components'
 
@@ -11,7 +10,7 @@ import 'react-table/react-table.css'
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
 `
-
+/*
 const Update = styled.div`
     color: #ef9b0f;
     cursor: pointer;
@@ -21,7 +20,7 @@ const Delete = styled.div`
     color: #ff0000;
     cursor: pointer;
 `
-
+/*
 class UpdateJob extends Component {
     updateUser = event => {
         event.preventDefault()
@@ -52,7 +51,7 @@ class DeleteJob extends Component {
         return <Delete onClick={this.deleteUser}>Delete</Delete>
     }
 }
-
+*/
 class JobsList extends Component {
     constructor(props) {
         super(props)
@@ -78,7 +77,7 @@ class JobsList extends Component {
         jobs.map(x => console.log(x.name));
         console.log('TCL: JobsList -> render -> jobs', jobs)
 
-        let showTable = true
+        let showTable = true;
         if (!jobs.length) {
             showTable = false
         }

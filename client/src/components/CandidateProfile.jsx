@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {JobsUpdate} from "../pages";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class CandidateProfile extends Component {
     constructor(props) {
