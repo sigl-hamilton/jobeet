@@ -4,6 +4,7 @@ const UserCtrl = require('../controllers/user_controller');
 
 const router = express.Router();
 
+router.get('/list', UserCtrl.getUsers);
 router.get('/:id', UserCtrl.getUserById);
 //router.post('/register', UserCtrl.register);
 //router.post('/login', UserCtrl.logIn);
