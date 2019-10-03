@@ -15,9 +15,10 @@ app.use((req, res, next) => {
 });
 */
 
+router.get('/list', CompanyCtrl.getCompanies) // Lui il faut le mettre au dessus sinon ça proc ce d'en dessous en premier
 router.post('/create', CompanyCtrl.createCompany)
-/*router.get('/list', JobCtrl.getJobs) // Lui il faut le mettre au dessus sinon ça proc ce d'en dessous en premier
-router.put('/:id', JobCtrl.updateJob)
+
+/*router.put('/:id', JobCtrl.updateJob)
 router.delete('/:id', JobCtrl.deleteJob)
 router.get('/:id', JobCtrl.getJobById)
 */

@@ -14,6 +14,9 @@ export const getCandidates = () => api.get(`/candidate/list`);
 //export const getCandidateById = id => api.get(`/candidate/${id}`);
 export const getUserById = id => api.get(`/user/${id}`);
 
+export const createCompany = payload => api.post(`/company/create`, payload);
+export const getAllCompanies = () => api.get(`/company/list`);
+
 const apis = {
     insertJob,
     getAllJobs,
@@ -22,6 +25,8 @@ const apis = {
     getJobById,
     getUserById,
     getCandidates,
+    createCompany,
+    getAllCompanies
 //    getCandidateById
 };
 

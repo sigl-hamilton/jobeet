@@ -8,4 +8,7 @@ import LogIn from './LogIn'
 import CandidateList from "./CandidateList";
 import UserProfile from "./UserProfile";
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, UserProfile}
+import CompanyCreate from "./CompanyCreate"
+import CompaniesList from "./CompaniesList"
+
+export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, UserProfile, CompanyCreate, CompaniesList}

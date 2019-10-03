@@ -1,21 +1,18 @@
 const CompanyModel = require('../models/company_model')
 
 createCompany = (req, res) => {
-    const body = req.body;
 
+    const body = req.body;
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a Company',
         })
     }
-
     const company = new CompanyModel(body)
-
     if (!company) {
         return res.status(400).json({ success: false, error: err })
     }
-
     company
         .save()
         .then(() => {
@@ -26,11 +23,12 @@ createCompany = (req, res) => {
             })
         })
         .catch(error => {
+            console.log(error);
             return res.status(400).json({
                 error,
                 message: 'Company not created!',
             })
-        })
+        });
 }
 
 updateCompany = async (req, res) => {
@@ -102,7 +100,7 @@ getCompanyById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getCompanys = async (req, res) => {
+getCompanies = async (req, res) => {
     await Company.find({}, (err, jobs) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -110,7 +108,7 @@ getCompanys = async (req, res) => {
         if (!jobs.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Company not found` })
+                .json({ success: false, error: `No companies` })
         }
         return res.status(200).json({ success: true, data: jobs })
     }).catch(err => console.log(err))
@@ -120,6 +118,6 @@ module.exports = {
     createCompany,
     updateCompany,
     deleteCompany,
-    getCompanys,
+    getCompanies,
     getCompanyById,
 }
