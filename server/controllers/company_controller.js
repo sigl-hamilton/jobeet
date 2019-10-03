@@ -101,16 +101,16 @@ getCompanyById = async (req, res) => {
 }
 
 getCompanies = async (req, res) => {
-    await Company.find({}, (err, jobs) => {
+    await CompanyModel.find({}, (err, companies) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!jobs.length) {
+        if (!CompanyModel.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `No companies` })
         }
-        return res.status(200).json({ success: true, data: jobs })
+        return res.status(200).json({ success: true, data: companies })
     }).catch(err => console.log(err))
 }
 

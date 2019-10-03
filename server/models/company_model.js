@@ -3,10 +3,25 @@ const Schema = mongoose.Schema
 
 const CompanySchema = new Schema(
     {
-        name: { type: String, required: true },
-        description: { type: String, required: true },
-        logo: { type: String, required: false },
-        recruiters: [{type: mongoose.Schema.Types.ObjectId, ref: 'RecruiterUserSchema'}],
+        name: {
+            type: String, required: true
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        logo: {
+            type: String,
+            required: false
+        },
+        labels: {
+            type: [String],
+            required: true
+        },
+        recruiters: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'RecruiterUserSchema'
+        }],
     },
     { timestamps: true },
 );

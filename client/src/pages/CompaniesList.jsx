@@ -1,10 +1,8 @@
 
 import React, { Component } from 'react'
 import api from '../api'
-import {Job} from '../components'
-
+import {Company} from '../components'
 import styled from 'styled-components'
-
 import 'react-table/react-table.css'
 
 const Wrapper = styled.div`
@@ -80,7 +78,7 @@ class CompaniesList extends Component {
         return (
             <Wrapper>
                 {companies.map(x =>
-                    <Job
+                    <Company
                     name={x.name}
                     description={x.description}
                     labels={x.labels}
