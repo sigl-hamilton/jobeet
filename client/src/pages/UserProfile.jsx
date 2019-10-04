@@ -11,7 +11,7 @@ class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idUser: props._id,
+            idUser: props.match.params.id,
             isLoading: false,
             user: null
         }
@@ -33,7 +33,6 @@ class UserProfile extends Component {
         let showTable = true;
         if (!user) { showTable = false; };
         let profile;
-        console.log(user);
         if (showTable && user.user_type === 'CANDIDATE') {
             profile = <CandidateProfile user = {user}/>
         }

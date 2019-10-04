@@ -21,7 +21,6 @@ class UserList extends Component {
         this.setState({ isLoading: true });
 
         await api.getUsers().then(users => {
-            console.log(users);
             this.setState({
                 users: users.data.data,
                 isLoading: false,
