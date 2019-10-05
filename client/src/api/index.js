@@ -26,7 +26,8 @@ const apis = {
     getUserById,
     getCandidates,
     createCompany,
-    getAllCompanies
+    getAllCompanies,
+    getCompanyById
 //    getCandidateById
 };
 

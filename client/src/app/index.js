@@ -19,6 +19,7 @@ function App() {
                 <Route path="/user/:id" exact component={UserProfile} />
                 <Route path="/company/create" exact component={CompanyCreate}/>
                 <Route path="/company/list" exact component={CompaniesList}/>
+                <Route path="/company/:id" exact component={CompanyProfile}/>
             </Switch>
         </Router>
     )
