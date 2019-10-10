@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Avatar from 'react-avatar';
 import Badge from "react-bootstrap/Badge";
+import {Link} from "react-router-dom";
 
 
 class CandidateProfile extends Component {
@@ -11,7 +12,7 @@ class CandidateProfile extends Component {
         super(props);
         this.state = {
             isLoading: false,
-        }
+        };
     }
 
     render() {
@@ -24,23 +25,35 @@ class CandidateProfile extends Component {
         }
 
         return (
-            <Container style={{background:'#aaa4a3', borderRadius: '10px'}}>
-                <Row>
-                    <Avatar name="Brandon Quinne" round={true} style={{ margin:'10px'}}/>
+            <Container>
+                <Row style={{background:'#aaa4a3', borderRadius: '10px'}}>
+                    <Avatar name={candidate.firstname + ' ' + candidate.lastname} round={true} style={{ margin:'10px'}}/>
                     <Col lg={2} style={{textAlign: 'left', paddingTop:'10px'}}>
                         <div>{candidate.firstname} {candidate.lastname}</div>
                         <div>{candidate.phone}</div>
                         {job_status}
                     </Col>
                     <Col lg={6}>
-
                         <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px", height:150}}>
                             <h5>Description</h5>
                             {candidate.description}
                         </div>
                     </Col>
+                    <Col>
+                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
+                            <Link to={{
+                                pathname: '/candidate/update/'+ this.props.user._id,
+                                state: { user: this.props.user }
+                            }}
+                                  className="btn btn-dark" variant="dark"
+                            > Update your profile </Link>
+                        </div>
+                    </Col>
                 </Row>
-                <Row>
+                <Row style={{marginTop: '10px'}}>
+                    <Col lg={3} style={{background:'#aaa4a3', borderRadius: '10px'}}>
+                        <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>Skills</div>
+                    </Col>
                 </Row>
             </Container>
         )
