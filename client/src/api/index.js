@@ -12,9 +12,16 @@ export const getJobById = id => api.get(`/job/${id}`);
 export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
 //export const getCandidateById = id => api.get(`/candidate/${id}`);
+export const getUsers = () => api.get(`/user/list`);
 export const getUserById = id => api.get(`/user/${id}`);
+export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const register = newUser => api.post(`/register`, newUser);
 export const login = newUser => api.post(`/login`, newUser);
+
+export const insertLabel = payload => api.post(`/label`, payload);
+export const getLabels = () => api.get(`/label/list`);
+export const updateLabelById = (id, payload) => api.put(`/label/${id}`, payload);
+export const getLabelById = id => api.get(`/label/${id}`);
 
 const apis = {
     insertJob,
@@ -23,9 +30,16 @@ const apis = {
     deleteJobById,
     getJobById,
     getUserById,
+    updateUserById,
     getCandidates,
     register,
-    login
+    login,
+    getUsers,
+    insertLabel,
+    getLabels,
+    updateLabelById,
+    getLabelById,
+
 //    getCandidateById
 };
 

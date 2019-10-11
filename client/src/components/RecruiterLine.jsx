@@ -3,21 +3,22 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 
-class CandidateLine extends Component {
+class RecruiterLine extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            users: [],
             isLoading: false,
         }
     }
 
     render() {
-        const firstname = this.props.firstname;
-        const lastname = this.props.lastname;
-        const phone = this.props.phone;
-        const description = this.props.description;
-        const user_type = this.props.user_type;
-        const id = this.props.id;
+        let firstname = this.props.firstname;
+        let lastname = this.props.lastname;
+        let phone = this.props.phone;
+        let description = this.props.description;
+        let user_type = this.props.user_type;
+        let id = this.props.id;
         return (
             <Row>
                 <Col>
@@ -37,16 +38,16 @@ class CandidateLine extends Component {
                     <p>{phone}</p>
                 </Col>
                 <Col>
-                    <h3>User Type</h3>
+                    <h3>User status</h3>
                     <p>{user_type}</p>
                 </Col>
                 <Col>
                     <h3>ID</h3>
-                    <a href={'/user/' + id}>id</a>
+                    <p>{id}</p>
                 </Col>
             </Row>
         )
     }
 }
 
-export default CandidateLine
+export default RecruiterLine

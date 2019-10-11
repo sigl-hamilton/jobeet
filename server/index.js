@@ -98,6 +98,7 @@ app.post('/api/login',
 );
 
 // Endpoint to get current user
+
 app.get('/user', function(req, res){
     console.log(req.user);
     res.send(req.user);
