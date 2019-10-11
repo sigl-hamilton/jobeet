@@ -6,6 +6,7 @@ import {Job} from '../components'
 import styled from 'styled-components'
 
 import 'react-table/react-table.css'
+import Container from "react-bootstrap/Container";
 
 const Wrapper = styled.div`
     padding: 10px 40px 40px 40px;
@@ -83,14 +84,14 @@ class JobsList extends Component {
         }
 
         return (
-            <Wrapper>
+            <Container>
                 {jobs.map(x =>
                     <Job
                     name={x.name}
                     description={x.description}
                     labels={x.labels}
                 />)}
-            </Wrapper>
+            </Container>
         )
     }
 }
