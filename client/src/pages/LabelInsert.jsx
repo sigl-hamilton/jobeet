@@ -43,7 +43,7 @@ class CandidateInsert extends Component {
                             />
                         </Form.Group>
                     </Form.Row>
-                    <Button variant="primary" onClick={this.onSubmit}>
+                    <Button variant="dark" onClick={this.onSubmit}>
                         Submit
                     </Button>
                 </Form>

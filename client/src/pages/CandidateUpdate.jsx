@@ -10,7 +10,6 @@ import Button from "react-bootstrap/Button";
 class CandidateUpdate extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         const userProps = this.props.location.state.user;
         this.state = {
             user: userProps,

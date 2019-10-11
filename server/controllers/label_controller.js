@@ -53,7 +53,7 @@ updateLabelById =  (req, res) => {
             error: 'You must provide a body to update',
         });
     }
-    LabelSchema.findOne({ _id: body.id }, (err, label) => {
+    LabelSchema.findOne({ _id: req.params.id }, (err, label) => {
         if (err) {
             return res.status(404).json({ err, message: 'Label not found!',})
         }
