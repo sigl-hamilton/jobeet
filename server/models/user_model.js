@@ -6,7 +6,7 @@ const UserSchema = new Schema(
     {
         firstname: { type: String, trim: true, required: true },
         lastname: { type: String, trim: true, required: true },
-        description: { type: String},
+        description: { type: String },
         phone: { type: String},
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
@@ -22,6 +22,7 @@ const UserSchema = new Schema(
             enum: ['ACTIVE', 'PASSIVE', 'INACTIVE'],
             default: 'ACTIVE'
         },
+        labels: [{type: mongoose.Schema.Types.ObjectId, ref: 'LabelSchema'}],
         company: {type: mongoose.Schema.Types.ObjectId, ref: 'CompanySchema'},
     },
     { timestamps: true },

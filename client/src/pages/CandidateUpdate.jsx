@@ -10,14 +10,16 @@ import Button from "react-bootstrap/Button";
 class CandidateUpdate extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props);
         const userProps = this.props.location.state.user;
-            this.state = {
-                user: userProps,
-                email: userProps.email,
-                firstname: userProps.firstname,
-                lastname: userProps.lastname,
-                description: userProps.description,
-                job_status: userProps.job_status,
+        this.state = {
+            user: userProps,
+            email: userProps.email,
+            firstname: userProps.firstname,
+            lastname: userProps.lastname,
+            description: userProps.description,
+            job_status: userProps.job_status,
+            user_type: userProps.user_type,
             errors: {}
         };
     }
@@ -33,19 +35,23 @@ class CandidateUpdate extends Component {
         e.preventDefault();
         const userData = {
             email: this.state.email,
-            password: this.state.password
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            description: this.state.description,
+            job_status: this.state.job_status,
+            user_type: this.state.user_type
         };
-        /*api.login(userData).then(res => {
-            window.alert(`User logged`);
-
-        });*/
+        api.updateUserById(this.state.user._id, userData).then(res => {
+            window.alert(`Candidate Updated`);
+            this.props.history.push('/user/' + this.state.user._id);
+        })
     };
 
     render() {
         const { errors } = this.state;
         return (
             <Container>
-                <h1>Create Job</h1>
+                <h1>Update Candidate</h1>
                 <Form>
                     <Form.Row>
                         <Form.Group as={Col} controlId="email">
@@ -66,7 +72,6 @@ class CandidateUpdate extends Component {
                         <Form.Group as={Col} controlId="firstname">
                             <Form.Label>Firstname</Form.Label>
                             <Form.Control
-                                type="email"
                                 placeholder={this.customPlaceholder("firstname")}
                                 onChange={this.onChange}
                                 value={this.state.firstname}
@@ -76,7 +81,6 @@ class CandidateUpdate extends Component {
                         <Form.Group as={Col} controlId="lastname">
                             <Form.Label>Lastname</Form.Label>
                             <Form.Control
-                                type="email"
                                 placeholder={this.customPlaceholder("lastname")}
                                 onChange={this.onChange}
                                 value={this.state.lastname}
@@ -94,10 +98,6 @@ class CandidateUpdate extends Component {
                         <Form.Control placeholder="Apartment, studio, or floor" />
                     </Form.Group>
 
-                    <Form.Group id="formGridCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
-
                     <Form.Group controlId="job_status">
                         <Form.Label>Your current status</Form.Label>
                         <Form.Control as="select">
@@ -109,10 +109,10 @@ class CandidateUpdate extends Component {
 
                     <Form.Group controlId="description">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control as="textarea" rows="3" onChange={this.onChange} value={this.description}/>
+                        <Form.Control as="textarea" rows="3" onChange={this.onChange} value={this.state.description}/>
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" onClick={this.onSubmit}>
                         Submit
                     </Button>
                 </Form>
