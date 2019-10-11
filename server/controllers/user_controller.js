@@ -118,7 +118,40 @@ getUsers = function (req, res) {
     }).catch(err => console.log(err))
 };
 
-getCandidateById =  (req, res) => {
+updateUserById =  (req, res) => {
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+    if (body.user_type === 'CANDIDATE') {
+        return updateCandidate(req.params.id, body, res);
+    }
+};
+
+updateCandidate = (id, body, res) => {
+    UserSchema.findOne({ _id: id }, (err, user) => {
+        if (err) {
+            return res.status(404).json({ err, message: 'User not found!',})
+        }
+        user.firstname = body.firstname;
+        user.lastname = body.lastname;
+        user.email = body.email;
+        user.description = body.description;
+        user.job_status = body.job_status;
+        user.save()
+            .then(() => {
+                return res.status(200).json({success: true, id: user._id, message: 'User updated!'})
+            })
+            .catch(error => {
+                return res.status(404).json({ error, message: 'User not updated!' })
+            });
+    });
+};
+
+getCandidateById = (req, res) => {
     UserSchema.findOne({ id: req.params.id , "user_type" : "CANDIDATE"}, (err, candidate) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -180,6 +213,7 @@ module.exports = {
     //logIn,
     getUserByEmail,
     getUserById,
+    updateUserById,
     getCandidates,
     getCandidateById,
     getRecruiters,
