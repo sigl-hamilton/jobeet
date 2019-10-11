@@ -112,7 +112,7 @@ class CandidateUpdate extends Component {
                         <Form.Control as="textarea" rows="3" onChange={this.onChange} value={this.state.description}/>
                     </Form.Group>
 
-                    <Button variant="primary" onClick={this.onSubmit}>
+                    <Button variant="dark" onClick={this.onSubmit}>
                         Submit
                     </Button>
                 </Form>

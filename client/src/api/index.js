@@ -18,6 +18,11 @@ export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const register = newUser => api.post(`/register`, newUser);
 export const login = newUser => api.post(`/login`, newUser);
 
+export const insertLabel = payload => api.post(`/label`, payload);
+export const getLabels = () => api.get(`/label/list`);
+export const updateLabelById = (id, payload) => api.put(`/label/${id}`, payload);
+export const getLabelById = id => api.get(`/label/${id}`);
+
 const apis = {
     insertJob,
     getAllJobs,
@@ -29,7 +34,12 @@ const apis = {
     getCandidates,
     register,
     login,
-    getUsers
+    getUsers,
+    insertLabel,
+    getLabels,
+    updateLabelById,
+    getLabelById,
+
 //    getCandidateById
 };
 

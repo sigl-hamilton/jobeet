@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { NavBar } from '../components'
 import { JobsList, JobsInsert, JobsUpdate, CandidateList, CandidateUpdate, UserProfile, SignUp, LogIn, UserList} from '../pages'
+import { LabelList, LabelInsert, LabelUpdate} from '../pages'
+
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -21,6 +23,9 @@ function App() {
                 <Route path="/candidate/update/:id" exact component={CandidateUpdate} />
                 <Route path="/user/list" exact component={UserList} />
                 <Route path="/user/:id" exact component={UserProfile} />
+                <Route path="/label/create" exact component={LabelInsert} />
+                <Route path="/label/list" exact component={LabelList} />
+                <Route path="/label/update" exact component={LabelUpdate} />
             </Switch>
         </Router>
     )
