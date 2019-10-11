@@ -49,11 +49,6 @@ class Links extends Component {
                 </Link>
             </Item>
             <Item>
-                <Link to="/label/update" className="nav-link">
-                    Label update
-                </Link>
-            </Item>
-            <Item>
                 <Link to="/label/list" className="nav-link">
                     Label List
                 </Link>

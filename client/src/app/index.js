@@ -8,6 +8,11 @@ import { LabelList, LabelInsert, LabelUpdate} from '../pages'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faPen);
 
 function App() {
     return (
@@ -25,7 +30,7 @@ function App() {
                 <Route path="/user/:id" exact component={UserProfile} />
                 <Route path="/label/create" exact component={LabelInsert} />
                 <Route path="/label/list" exact component={LabelList} />
-                <Route path="/label/update" exact component={LabelUpdate} />
+                <Route path="/label/update/:id" exact component={LabelUpdate} />
             </Switch>
         </Router>
     )
