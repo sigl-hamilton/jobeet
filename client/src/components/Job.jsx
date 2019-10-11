@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
+import {Row, Col, Card, Badge} from 'react-bootstrap'
 
-const BOX_STYLE = {
-    border: "2px solid black",
-    display: "block",
-    margin: "15px auto",
-    width: "70%",
-    borderRadius: "15px",
-    padding: "4px"
+const CARD_STYLE = {
+  margin: "4px"
 }
 
 class Job extends Component {
@@ -21,16 +17,30 @@ class Job extends Component {
     render() {
         let name = this.props.name;
         let description = this.props.description;
-        let labels = this.props.labels.join(", ");
+        let labels = [];
+        for (let i = 0; i < this.props.labels.length; i++) {
+          labels.push(<Badge pill variant="secondary">{
+            this.props.labels[i]
+          }</Badge>)
+        }
         return (
-            <div style={BOX_STYLE}>
-                <h3>Nom</h3>
-                <p>{name}</p>
-                <h3>Description</h3>
-                <p>{description}</p>
-                <h3>Labels</h3>
-                <p>{labels}</p>
-            </div>
+            <Card style={CARD_STYLE} border="dark">
+                  <Card.Header><h3>Nom</h3><p>{name}</p></Card.Header>
+                  <Card.Body>
+                    <Row>
+                        <Col xs={8}>
+                          <h3>Description</h3>
+                          <p>{description}</p>
+                        </Col>
+                        <Col xs={2}>
+                          <Card.Text>
+                            <h3>Labels</h3>
+                            {labels}
+                          </Card.Text>
+                        </Col>
+                    </Row>
+                  </Card.Body>
+            </Card>
         )
     }
 }
