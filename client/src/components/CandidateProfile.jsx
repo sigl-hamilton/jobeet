@@ -19,9 +19,9 @@ class CandidateProfile extends Component {
         const candidate = this.props.user;
         let job_status;
         if (candidate.job_status === 'ACTIVE') {
-            job_status = <Badge variant="dark">A la recherche d'un job</Badge>;
+            job_status = <Badge variant="dark">Actively looking for a job</Badge>;
         } else {
-            job_status = <Badge variant="light">Ne recherche pas de job</Badge>;
+            job_status = <Badge variant="light">Don't looking for a job</Badge>;
         }
 
         return (
@@ -42,8 +42,8 @@ class CandidateProfile extends Component {
                     <Col>
                         <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
                             <Link to={{
-                                pathname: '/candidate/update/'+ this.props.user._id,
-                                state: { user: this.props.user }
+                                pathname: '/candidate/update/'+ candidate._id,
+                                state: { user: candidate }
                             }}
                                   className="btn btn-dark" variant="dark"
                             > Update your profile </Link>
@@ -52,7 +52,12 @@ class CandidateProfile extends Component {
                 </Row>
                 <Row style={{marginTop: '10px'}}>
                     <Col lg={3} style={{background:'#aaa4a3', borderRadius: '10px'}}>
-                        <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>Skills</div>
+                        <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>
+                            Skills
+                        </div>
+                        <div>
+                            { candidate.labels.map( label => (<Badge variant="dark" style={{margin: '2px'}}>{label.name}</Badge>)) }
+                        </div>
                     </Col>
                 </Row>
             </Container>
