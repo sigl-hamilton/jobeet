@@ -55,7 +55,7 @@ class CandidateProfile extends Component {
                         <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>
                             Skills
                         </div>
-                        <div>
+                        <div style={{margin: '10px'}}>
                             { candidate.labels.map( label => (<Badge variant="dark" style={{margin: '2px'}}>{label.name}</Badge>)) }
                         </div>
                     </Col>

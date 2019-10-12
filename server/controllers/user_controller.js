@@ -136,9 +136,11 @@ updateCandidate = (id, body, res) => {
         if (err) {
             return res.status(404).json({ err, message: 'User not found!',})
         }
+        console.log(body);
         user.firstname = body.firstname;
         user.lastname = body.lastname;
         user.email = body.email;
+        user.phone = body.phone;
         user.description = body.description;
         user.job_status = body.job_status;
         user.labels = body.labels;
