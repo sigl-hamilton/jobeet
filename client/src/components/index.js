@@ -7,6 +7,5 @@ import CandidateProfile from './CandidateProfile'
 import Company from './Company'
 import CompanyProfile from '../pages/CompanyProfile'
 import RecruiterLine from './RecruiterLine'
-import Company from './Company'
 
-export { Links, Logo, NavBar, Job, CandidateLine, CandidateProfile, Company, CompanyProfile, RecruiterLine }
+export { Links, Logo, NavBar, Job, CandidateLine, CandidateProfile, RecruiterLine, Company, CompanyProfile }
