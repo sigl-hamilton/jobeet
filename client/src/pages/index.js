@@ -10,5 +10,6 @@ import UserProfile from "./UserProfile";
 
 import CompanyCreate from "./CompanyCreate"
 import CompaniesList from "./CompaniesList"
+import CompanyProfile from "./CompanyProfile"
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, UserProfile, CompanyCreate, CompaniesList}
+export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, UserProfile, CompanyCreate, CompaniesList, CompanyProfile}

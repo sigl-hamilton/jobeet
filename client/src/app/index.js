@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { NavBar } from '../components'
-import { JobsList, JobsInsert, JobsUpdate, CandidateList, UserProfile, CompanyCreate, CompaniesList} from '../pages'
+import { JobsList, JobsInsert, JobsUpdate, CandidateList, UserProfile, CompanyCreate, CompaniesList, CompanyProfile} from '../pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
