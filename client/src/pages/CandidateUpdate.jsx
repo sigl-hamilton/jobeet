@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Select from "react-select";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 class CandidateUpdate extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class CandidateUpdate extends Component {
             email: userProps.email,
             firstname: userProps.firstname,
             lastname: userProps.lastname,
+            phone: userProps.phone,
             description: userProps.description,
             job_status: userProps.job_status,
             user_type: userProps.user_type,
@@ -51,7 +54,7 @@ class CandidateUpdate extends Component {
     };
 
     handleChange = selectedLabels => {
-        this.setState({ selectedLabels});
+        this.setState({ selectedLabels });
     };
 
     onChange = e => {
@@ -59,20 +62,22 @@ class CandidateUpdate extends Component {
         console.log(e.target.value);
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
         const userDataLabels = this.state.selectedLabels.map(label => { return label.data });
-
         const userData = {
             email: this.state.email,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            phone: this.state.phone,
             description: this.state.description,
             job_status: this.state.job_status,
             user_type: this.state.user_type,
             labels: userDataLabels,
         };
         console.log(userData);
+
         api.updateUserById(this.state.user._id, userData).then(res => {
             window.alert(`Candidate Updated`);
             this.props.history.push('/user/' + this.state.user._id);
@@ -95,7 +100,7 @@ class CandidateUpdate extends Component {
                                 value={this.state.email}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Group as={Col} controlId="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" />
                         </Form.Group>
@@ -119,14 +124,24 @@ class CandidateUpdate extends Component {
                         </Form.Group>
                     </Form.Row>
 
-                    <Form.Group controlId="job_status">
-                        <Form.Label>Your current status</Form.Label>
-                        <Form.Control as="select" onChange={this.onChange}>
-                            <option value="ACTIVE">Actively looking for a job</option>
-                            <option value="PASSIVE">Looking for a job</option>
-                            <option value="INACTIVE">Don't looking for a job</option>
-                        </Form.Control>
-                    </Form.Group>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="job_status">
+                            <Form.Label>Your current status</Form.Label>
+                            <Form.Control as="select" onChange={this.onChange}>
+                                <option value="ACTIVE">Actively looking for a job</option>
+                                <option value="PASSIVE">Looking for a job</option>
+                                <option value="INACTIVE">Don't looking for a job</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="phone">
+                            <Form.Label>Phone</Form.Label>
+                            <PhoneInput
+                                placeholder="Enter phone number"
+                                value={ this.state.phone }
+                                onChange={ phone => this.setState({ phone })  } />
+                        </Form.Group>
+                    </Form.Row>
 
                     <Form.Group controlId="description">
                         <Form.Label>Description</Form.Label>
