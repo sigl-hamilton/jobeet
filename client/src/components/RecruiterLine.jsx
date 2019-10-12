@@ -13,6 +13,7 @@ class RecruiterLine extends Component {
     }
 
     render() {
+        console.log(this.props);
         let firstname = this.props.firstname;
         let lastname = this.props.lastname;
         let phone = this.props.phone;
@@ -43,7 +44,7 @@ class RecruiterLine extends Component {
                 </Col>
                 <Col>
                     <h3>ID</h3>
-                    <p>{id}</p>
+                    <a href={'/user/' + id}>id</a>
                 </Col>
             </Row>
         )

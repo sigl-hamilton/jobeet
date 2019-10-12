@@ -5,5 +5,6 @@ import Job from './Job'
 import CandidateLine from './CandidateLine'
 import CandidateProfile from './CandidateProfile'
 import RecruiterLine from './RecruiterLine'
+import RecruiterProfile from './RecruiterProfile'
 
-export { Links, Logo, NavBar, Job, CandidateLine, CandidateProfile, RecruiterLine }
+export { Links, Logo, NavBar, Job, CandidateLine, CandidateProfile, RecruiterLine, RecruiterProfile }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import api from "../api";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 class SignUp extends Component {
     constructor() {
@@ -10,6 +12,7 @@ class SignUp extends Component {
             email: "",
             password: "",
             password2: "",
+            user_type: "",
             errors: {}
         };
     }
@@ -23,7 +26,8 @@ class SignUp extends Component {
             firstname: this.state.firstname,
             email: this.state.email,
             password: this.state.password,
-            password2: this.state.password2
+            password2: this.state.password2,
+            user_type: this.state.user_type
         };
         await api.register(newUser).then(res => {
             window.alert(`User created`);
@@ -32,7 +36,8 @@ class SignUp extends Component {
                 firstname: '',
                 email: '',
                 password: '',
-                password2:''
+                password2:'',
+                user_type:''
             })
         })
     };
@@ -105,6 +110,16 @@ class SignUp extends Component {
                                     type="password"
                                 />
                                 <label htmlFor="password2">Confirm Password</label>
+                            </div>
+                            <div className="input-field col s12">
+                                <Form.Group as={Col} md="4" controlId="user_type">
+                                    <label htmlFor="user_type">Type of user</label>
+                                    <Form.Control as="select" onChange={this.onChange}>
+                                        <option value="CANDIDATE">Candidate</option>
+                                        <option value="RECRUITER">Recruiter</option>
+                                    </Form.Control>
+                                </Form.Group>
+
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button

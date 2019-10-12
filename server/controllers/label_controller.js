@@ -9,11 +9,11 @@ createLabel = (req, res) => {
         })
     }
     const label = new LabelSchema(body);
-    if (!label) { return res.status(400).json({ success: false, error: err }); }
+    if (!label) { return res.status(400).json({ success: false, error: res.err }); }
 
     label.save()
         .then(() => {
-            return res.status(201).json({ success: true, id: label._id, message: 'Job created!'});
+            return res.status(201).json({ success: true, id: label._id, message: 'Label created!'});
         }).catch(error => {
             return res.status(400).json({error, message: 'Label not created!'});
         });
