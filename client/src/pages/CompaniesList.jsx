@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import api from '../api'
 import {Company} from '../components'
 import styled from 'styled-components'
+
 import 'react-table/react-table.css'
 
 const Wrapper = styled.div`

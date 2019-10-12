@@ -8,5 +8,4 @@ router.get('/list', CompanyCtrl.getCompanies); // Lui il faut le mettre au dessu
 router.post('/create', CompanyCtrl.createCompany);
 router.post('/:id', CompanyCtrl.getCompanyById);
 
-
-module.exports = router
+module.exports = router;

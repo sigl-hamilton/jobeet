@@ -18,5 +18,5 @@ import LabelList from './LabelList'
 import LabelInsert from './LabelInsert'
 import LabelUpdate from './LabelUpdate'
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList, CompanyCreate, CompaniesList, CompanyProfile,
-    LabelList, LabelInsert, LabelUpdate}
+export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
+    LabelList, LabelInsert, LabelUpdate, CompanyCreate, CompaniesList, CompanyProfile};
