@@ -14,4 +14,9 @@ import CompanyCreate from "./CompanyCreate"
 import CompaniesList from "./CompaniesList"
 import CompanyProfile from "./CompanyProfile"
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList, CompanyCreate, CompaniesList, CompanyProfile}
+import LabelList from './LabelList'
+import LabelInsert from './LabelInsert'
+import LabelUpdate from './LabelUpdate'
+
+export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList, CompanyCreate, CompaniesList, CompanyProfile,
+    LabelList, LabelInsert, LabelUpdate}

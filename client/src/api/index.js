@@ -22,6 +22,11 @@ export const createCompany = payload => api.post(`/company/create`, payload);
 export const getAllCompanies = () => api.get(`/company/list`);
 export const getCompanyById = id => api.get(`/company/${id}`);
 
+export const insertLabel = payload => api.post(`/label`, payload);
+export const getLabels = () => api.get(`/label/list`);
+export const updateLabelById = (id, payload) => api.put(`/label/${id}`, payload);
+export const getLabelById = id => api.get(`/label/${id}`);
+
 const apis = {
     insertJob,
     getAllJobs,
@@ -36,7 +41,11 @@ const apis = {
     getCompanyById,
     register,
     login,
-    getUsers
+    getUsers,
+    insertLabel,
+    getLabels,
+    updateLabelById,
+    getLabelById,
 //    getCandidateById
 };
 

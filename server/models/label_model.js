@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
 const LabelSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true
-        },
+        name: { type: String, required: true},
     },
     { timestamps: true },
 );
