@@ -13,10 +13,10 @@ app.use((req, res, next) => {
   }
 });
 
-router.post('/', JobCtrl.createJob)
-router.get('/list', JobCtrl.getJobs) // Lui il faut le mettre au dessus sinon ça proc ce d'en dessous en premier
-router.put('/:id', JobCtrl.updateJob)
-router.delete('/:id', JobCtrl.deleteJob)
-router.get('/:id', JobCtrl.getJobById)
+router.post('/', JobCtrl.createJob);
+router.get('/list', JobCtrl.getJobs); // Lui il faut le mettre au dessus sinon ça proc ce d'en dessous en premier
+router.put('/:id', JobCtrl.updateJob);
+router.delete('/:id', JobCtrl.deleteJob);
+router.get('/:id', JobCtrl.getJobById);
 
 module.exports = router

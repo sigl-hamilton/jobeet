@@ -6,9 +6,10 @@ import SignUp from './SignUp'
 import LogIn from './LogIn'
 
 import CandidateList from "./CandidateList";
+import CandidateUpdate from "./CandidateUpdate"
+
 import UserProfile from "./UserProfile";
 import UserList from "./UserList";
-import CandidateUpdate from "./CandidateUpdate"
 
 import LabelList from './LabelList'
 import LabelInsert from './LabelInsert'

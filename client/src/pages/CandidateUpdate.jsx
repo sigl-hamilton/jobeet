@@ -58,8 +58,6 @@ class CandidateUpdate extends Component {
     };
 
     onChange = e => {
-        console.log(e.target.id);
-        console.log(e.target.value);
         this.setState({ [e.target.id]: e.target.value });
     };
 
@@ -76,7 +74,6 @@ class CandidateUpdate extends Component {
             user_type: this.state.user_type,
             labels: userDataLabels,
         };
-        console.log(userData);
 
         api.updateUserById(this.state.user._id, userData).then(res => {
             window.alert(`Candidate Updated`);
