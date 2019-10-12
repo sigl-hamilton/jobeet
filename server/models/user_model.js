@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
+require('./label_model');
 
 const UserSchema = new Schema(
     {
         firstname: { type: String, trim: true, required: true },
         lastname: { type: String, trim: true, required: true },
         description: { type: String },
-        phone: { type: String},
+        phone: { type: String },
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
         user_type: {
@@ -16,14 +17,14 @@ const UserSchema = new Schema(
             default: 'CANDIDATE'
         },
         cv: {type: String },
-        jobs: [{type: mongoose.Schema.Types.ObjectId,ref: 'Job'}],
+        jobs: [{type: mongoose.Schema.Types.ObjectId,ref: 'jobs'}],
         job_status: {
             type: String,
             enum: ['ACTIVE', 'PASSIVE', 'INACTIVE'],
             default: 'ACTIVE'
         },
-        labels: [{type: mongoose.Schema.Types.ObjectId, ref: 'LabelSchema'}],
-        company: {type: mongoose.Schema.Types.ObjectId, ref: 'CompanySchema'},
+        labels: [{type: mongoose.Schema.Types.ObjectId, ref: 'labels'}],
+        company: {type: mongoose.Schema.Types.ObjectId, ref: 'companies'},
     },
     { timestamps: true },
 );

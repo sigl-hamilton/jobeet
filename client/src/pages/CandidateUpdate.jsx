@@ -1,45 +1,83 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import api from "../api";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Select from "react-select";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 class CandidateUpdate extends Component {
     constructor(props) {
         super(props);
         const userProps = this.props.location.state.user;
+        const userPropsLabels = userProps.labels ? this.formatOptionLabels(userProps.labels) : null;
+
         this.state = {
             user: userProps,
             email: userProps.email,
             firstname: userProps.firstname,
             lastname: userProps.lastname,
+            phone: userProps.phone,
             description: userProps.description,
             job_status: userProps.job_status,
             user_type: userProps.user_type,
-            errors: {}
+            errors: {},
+            selectedLabels: userPropsLabels,
+            optionLabels: {},
         };
-    }
+    };
+
     customPlaceholder = (placeholderType) => {
         if (!this.state.user[placeholderType])
             return "Enter " + placeholderType;
     };
 
+    formatOptionLabels = labels => {
+        return labels.map(
+            label => {
+                const skill = {};
+                skill.label = label.name;
+                skill.value = label._id;
+                skill.data = label;
+                return skill;
+            }
+        );
+    };
+
+    componentDidMount = async () => {
+        await api.getLabels().then( labels=> {
+            const allOptionLabels = this.formatOptionLabels(labels.data.data);
+            this.setState({optionLabels : allOptionLabels});
+        });
+    };
+
+    handleChange = selectedLabels => {
+        this.setState({ selectedLabels });
+    };
+
     onChange = e => {
+        console.log(e.target.id);
+        console.log(e.target.value);
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
+        const userDataLabels = this.state.selectedLabels.map(label => { return label.data });
         const userData = {
             email: this.state.email,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            phone: this.state.phone,
             description: this.state.description,
             job_status: this.state.job_status,
-            user_type: this.state.user_type
+            user_type: this.state.user_type,
+            labels: userDataLabels,
         };
+        console.log(userData);
+
         api.updateUserById(this.state.user._id, userData).then(res => {
             window.alert(`Candidate Updated`);
             this.props.history.push('/user/' + this.state.user._id);
@@ -62,7 +100,7 @@ class CandidateUpdate extends Component {
                                 value={this.state.email}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Group as={Col} controlId="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" />
                         </Form.Group>
@@ -76,7 +114,6 @@ class CandidateUpdate extends Component {
                                 value={this.state.firstname}
                             />
                         </Form.Group>
-
                         <Form.Group as={Col} controlId="lastname">
                             <Form.Label>Lastname</Form.Label>
                             <Form.Control
@@ -87,30 +124,40 @@ class CandidateUpdate extends Component {
                         </Form.Group>
                     </Form.Row>
 
-                    <Form.Group controlId="address1">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 Main St" />
-                    </Form.Group>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="job_status">
+                            <Form.Label>Your current status</Form.Label>
+                            <Form.Control as="select" onChange={this.onChange}>
+                                <option value="ACTIVE">Actively looking for a job</option>
+                                <option value="PASSIVE">Looking for a job</option>
+                                <option value="INACTIVE">Don't looking for a job</option>
+                            </Form.Control>
+                        </Form.Group>
 
-                    <Form.Group controlId="address2">
-                        <Form.Label>Address 2</Form.Label>
-                        <Form.Control placeholder="Apartment, studio, or floor" />
-                    </Form.Group>
-
-                    <Form.Group controlId="job_status">
-                        <Form.Label>Your current status</Form.Label>
-                        <Form.Control as="select">
-                            <option value="ACTIVE">Actively looking for a job</option>
-                            <option value="PASSIVE">Looking for a job</option>
-                            <option value="INACTIVE">Don't looking for a job</option>
-                        </Form.Control>
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="phone">
+                            <Form.Label>Phone</Form.Label>
+                            <PhoneInput
+                                placeholder="Enter phone number"
+                                value={ this.state.phone }
+                                onChange={ phone => this.setState({ phone })  } />
+                        </Form.Group>
+                    </Form.Row>
 
                     <Form.Group controlId="description">
                         <Form.Label>Description</Form.Label>
                         <Form.Control as="textarea" rows="3" onChange={this.onChange} value={this.state.description}/>
                     </Form.Group>
 
+                    <Form.Group controlId="labels">
+                        <Form.Label>Skills</Form.Label>
+                        <Select
+                            closeMenuOnSelect={false}
+                            isMulti
+                            options={this.state.optionLabels}
+                            onChange={this.handleChange}
+                            value={this.state.selectedLabels}
+                        />
+                    </Form.Group>
                     <Button variant="dark" onClick={this.onSubmit}>
                         Submit
                     </Button>
