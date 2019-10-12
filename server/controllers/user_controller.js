@@ -1,5 +1,6 @@
 
 const UserSchema = require('../models/user_model');
+const LabelSchema = require('../models/label_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const passport = require('passport');
@@ -88,20 +89,19 @@ getUserByEmail = (email, callback) => {
     UserSchema.findOne(query, callback);
 };
 
-/*getUserById = function(id, callback){
-    UserSchema.findById(id, callback);
-};
-*/
 getUserById =  (req, res) => {
-    UserSchema.findOne({ _id: req.params.id}, (err, user) => {
-        if (err) { return res.status(400).json({ success: false, error: err }); }
+    UserSchema.findOne({ _id: req.params.id}).populate('labels').exec((err, user) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({ success: false, error: err });
+        }
         if (!user) {
             return res
                 .status(404)
                 .json({ success: false, error: `User not found` });
         }
         return res.status(200).json({ success: true, data: user });
-    }).catch(err => console.log(err));
+    });
 };
 
 getUsers = function (req, res) {
@@ -141,6 +141,7 @@ updateCandidate = (id, body, res) => {
         user.email = body.email;
         user.description = body.description;
         user.job_status = body.job_status;
+        user.labels = body.labels;
         user.save()
             .then(() => {
                 return res.status(200).json({success: true, id: user._id, message: 'User updated!'})
