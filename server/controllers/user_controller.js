@@ -91,8 +91,8 @@ getUserById = function(id, callback){
     UserSchema.findById(id, callback);
 };
 
-getUsers = async (req, res) => {
-    await UserSchema.find({}, (err, users) => {
+getUsers = function (req, res) {
+    UserSchema.find({}, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -133,6 +133,34 @@ const getCandidates =  (req, res) => {
     }).catch(err => console.log(err))
 };
 
+getRecruiterById =  (req, res) => {
+    UserSchema.findOne({ id: req.params.id , "user_type" : "RECRUITER"}, (err, candidate) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!candidate) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Recruiter not found` })
+        }
+        return res.status(200).json({ success: true, data: candidate })
+    }).catch(err => console.log(err))
+};
+
+const getRecruiters =  (req, res) => {
+    UserSchema.find({"user_type" : "RECRUITER"}, (err, candidate) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!candidate.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Recruiter not found` })
+        }
+        return res.status(200).json({ success: true, data: candidate })
+    }).catch(err => console.log(err))
+};
+
 module.exports = {
   //  signUp,
     //register,
@@ -140,5 +168,8 @@ module.exports = {
     getUserByEmail,
     getUserById,
     getCandidates,
-    getCandidateById
+    getCandidateById,
+    getRecruiters,
+    getRecruiterById,
+    getUsers,
 };

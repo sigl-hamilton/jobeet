@@ -12,6 +12,7 @@ export const getJobById = id => api.get(`/job/${id}`);
 export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
 //export const getCandidateById = id => api.get(`/candidate/${id}`);
+export const getUsers = () => api.get(`/user/list`);
 export const getUserById = id => api.get(`/user/${id}`);
 export const register = newUser => api.post(`/register`, newUser);
 export const login = newUser => api.post(`/login`, newUser);
@@ -32,7 +33,8 @@ const apis = {
     getAllCompanies,
     getCompanyById,
     register,
-    login
+    login,
+    getUsers
 //    getCandidateById
 };
 

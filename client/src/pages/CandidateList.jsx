@@ -29,9 +29,6 @@ class CandidateList extends Component {
 
     render() {
         const { candidates, isLoading } = this.state;
-        candidates.map(x => console.log(x.firstname));
-        console.log('TCL: CandidateList -> render -> candidates', candidates);
-
         let showTable = true;
         if (!candidates.length) { showTable = false; }
 
@@ -43,9 +40,8 @@ class CandidateList extends Component {
                         lastname={x.lastname}
                         phone={x.phone}
                         description={x.description}
-                        job_status={x.job_status}
+                        user_type={x.user_type}
                         id = {x._id}
-                        //               labels={x.labels}
                     />
                     )}
             </Container>

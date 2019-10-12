@@ -51,7 +51,16 @@ class Links extends Component {
                                Create Company
                             </Link>
                         </Item>
-
+                        <Item>
+                            <Link to="/user/list" className="nav-link">
+                                User list
+                            </Link>
+                        </Item>
+                        <Item>
+                            <Link to="/candidate/list" className="nav-link">
+                                Candidate List
+                            </Link>
+                        </Item>
                     </List>
                 </Collapse>
             </React.Fragment>
