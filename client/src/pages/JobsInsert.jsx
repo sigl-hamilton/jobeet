@@ -1,111 +1,109 @@
 import React, { Component } from 'react'
 import api from '../api'
 
-import styled from 'styled-components'
-
-const Title = styled.h1.attrs({
-    className: 'h1',
-})``
-
-const Wrapper = styled.div.attrs({
-    className: 'form-group',
-})`
-    margin: 0 30px;
-`
-
-const Label = styled.label`
-    margin: 5px;
-`
-
-const InputText = styled.input.attrs({
-    className: 'form-control',
-})`
-    margin: 5px;
-`
-
-const Button = styled.button.attrs({
-    className: `btn btn-primary`,
-})`
-    margin: 15px 15px 15px 5px;
-`
-
-const CancelButton = styled.a.attrs({
-    className: `btn btn-danger`,
-})`
-    margin: 15px 15px 15px 5px;
-`
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Select from "react-select";
+import Button from "react-bootstrap/Button";
 
 class JobsInsert extends Component {
     constructor(props) {
-        super(props)
-
+        super(props);
         this.state = {
+            user: this.props.location.state.user,
             name: '',
             description: '',
             labels: '',
-        }
-    }
+            selectedLabels: [],
+            optionLabels: {}
+        };
+    };
 
-    handleChangeInputName = async event => {
-        const name = event.target.value
-        this.setState({ name })
-    }
+    formatOptionLabels = labels => {
+        return labels.map(
+            label => {
+                const skill = {};
+                skill.label = label.name;
+                skill.value = label._id;
+                skill.data = label;
+                return skill;
+            }
+        );
+    };
 
-    handleChangeInputDescription = async event => {
-        const description = event.target.value
-        this.setState({ description })
-    }
+    componentDidMount = async () => {
+        await api.getLabels().then( labels=> {
+            const allOptionLabels = this.formatOptionLabels(labels.data.data);
+            this.setState({optionLabels : allOptionLabels});
+        });
+    };
 
-    handleChangeInputLabels = async event => {
-        const labels = event.target.value
-        this.setState({ labels })
-    }
+    onSubmit = e => {
+        e.preventDefault();
+        const { name, description, user } = this.state;
+        const jobLabels = this.state.selectedLabels.map(label => { return label.data });
 
-    handleIncludeJob = async () => {
-        const { name, description, labels } = this.state
-        const arrayLabels = labels.split(',')
-        const payload = { name, description, labels: arrayLabels }
+        const payload = { name, description, labels: jobLabels, author: user };
 
-        await api.insertJob(payload).then(res => {
-            window.alert(`Job inserted successfully`)
-            this.setState({
-                name: '',
-                description: '',
-                labels: '',
-            })
+        api.insertJob(payload).then(res => {
+            window.alert(`Job inserted successfully`);
+            this.props.history.push('/user/' + this.state.user._id);
         })
-    }
+    };
+
+    handleSelectChange = selectedLabels => {
+        this.setState({ selectedLabels });
+    };
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
 
     render() {
-        const { name, description, labels } = this.state
         return (
-            <Wrapper>
-                <Title>Create Job</Title>
-
-                <Label>Name: </Label>
-                <InputText
-                    type="text"
-                    value={name}
-                    onChange={this.handleChangeInputName}
-                />
-
-                <Label>Description: </Label>
-                <InputText
-                    type="text"
-                    value={description}
-                    onChange={this.handleChangeInputDescription}
-                />
-
-                <Label>Labels: </Label>
-                <InputText
-                    type="text"
-                    value={labels}
-                    onChange={this.handleChangeInputLabels}
-                />
-
-                <Button onClick={this.handleIncludeJob}>Add Job</Button>
-                <CancelButton href={'/jobs/list'}>Cancel</CancelButton>
-            </Wrapper>
+            <Container>
+                <h1>Create Job</h1>
+                <Form>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="name">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Job name"
+                                onChange={this.onChange}
+                                value={this.state.name}
+                            />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="description">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows="3"
+                                placeholder="Description of the job"
+                                onChange={this.onChange}
+                                value={this.state.description}
+                            />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Group controlId="labels">
+                        <Form.Label>Skills</Form.Label>
+                        <Select
+                            closeMenuOnSelect={false}
+                            isMulti
+                            options={this.state.optionLabels}
+                            onChange={this.handleSelectChange}
+                            value={this.state.selectedLabels}
+                        />
+                    </Form.Group>
+                    <Button variant="dark" onClick={this.onSubmit}>
+                        Add a job
+                    </Button>
+                    <Button style={{marginLeft:'10px'}} variant="light" href={'/user/' + this.state}>Cancel</Button>
+                </Form>
+            </Container>
         )
     }
 }

@@ -1,23 +1,15 @@
-const Job = require('../models/job_model')
+const Job = require('../models/job_model');
 
 createJob = (req, res) => {
-    const body = req.body
-
+    const body = req.body;
     if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a Job',
-        })
+        return res.status(400).json({ success: false, error: 'You must provide a Job'})
     }
 
-    const job = new Job(body)
+    const job = new Job(body);
+    if (!job) { return res.status(400).json({ success: false, error: err })}
 
-    if (!job) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    job
-        .save()
+    job.save()
         .then(() => {
             return res.status(201).json({
                 success: true,
@@ -31,7 +23,7 @@ createJob = (req, res) => {
                 message: 'Job not created!',
             })
         })
-}
+};
 
 updateJob = async (req, res) => {
     const body = req.body
@@ -69,10 +61,10 @@ updateJob = async (req, res) => {
                 })
             })
     })
-}
+};
 
 deleteJob = async (req, res) => {
-    await Job.findOneAndDelete({ _id: req.params.id }, (err, job) => {
+    await Job.findOneAndDelete({ id: req.params.id }, (err, job) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -85,7 +77,7 @@ deleteJob = async (req, res) => {
 
         return res.status(200).json({ success: true, data: job })
     }).catch(err => console.log(err))
-}
+};
 
 getJobById = async (req, res) => {
     await Job.findOne({ _id: req.params.id }, (err, job) => {
@@ -100,11 +92,12 @@ getJobById = async (req, res) => {
         }
         return res.status(200).json({ success: true, data: job })
     }).catch(err => console.log(err))
-}
+};
 
-getJobs = async (req, res) => {
-    await Job.find({}, (err, jobs) => {
+getJobs = (req, res) => {
+    Job.find({}).populate('labels').exec( (err, jobs) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ success: false, error: err })
         }
         if (!jobs.length) {
@@ -113,8 +106,8 @@ getJobs = async (req, res) => {
                 .json({ success: false, error: `Job not found` })
         }
         return res.status(200).json({ success: true, data: jobs })
-    }).catch(err => console.log(err))
-}
+    });
+};
 
 module.exports = {
     createJob,

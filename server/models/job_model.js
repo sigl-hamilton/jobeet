@@ -3,18 +3,12 @@ const Schema = mongoose.Schema;
 
 const Job = new Schema(
     {
-        name: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        },
-        labels: {
-            type: [String],
-            required: true
-        },
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+        labels: [{type: mongoose.Schema.Types.ObjectId, ref: 'labels'}],
+        author: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+        company: {type: mongoose.Schema.Types.ObjectId, ref: 'companies'},
+
     },
     { timestamps: true },
 );

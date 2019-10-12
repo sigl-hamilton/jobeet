@@ -22,7 +22,6 @@ function App() {
                 <Route path="/signup" exact component={SignUp} />
                 <Route path="/login" exact component={LogIn} />
                 <Route path="/jobs/list" exact component={JobsList} />
-                <Route path="/jobs/create" exact component={JobsInsert} />
                 <Route path="/jobs/update/:id" exact component={JobsUpdate} />
                 <Route path="/candidate/list/" exact component={CandidateList} />
                 <Route path="/candidate/update/:id" exact component={CandidateUpdate} />
