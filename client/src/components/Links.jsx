@@ -29,11 +29,6 @@ class Links extends Component {
                 </Link>
             </Item>
             <Item>
-                <Link to="/jobs/create" className="nav-link">
-                    Create Job
-                </Link>
-            </Item>
-            <Item>
                 <Link to="/user/list" className="nav-link">
                     User list
                 </Link>
