@@ -1,7 +1,6 @@
 const CompanyModel = require('../models/company_model')
 
 createCompany = (req, res) => {
-
     const body = req.body;
     if (!body) {
         return res.status(400).json({
