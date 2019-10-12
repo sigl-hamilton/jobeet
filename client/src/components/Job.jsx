@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 
 const BOX_STYLE = {
     border: "2px solid black",

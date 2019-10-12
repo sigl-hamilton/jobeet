@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { NavBar } from '../components'
-import { JobsList, JobsInsert, JobsUpdate, CandidateList, UserProfile, CompanyCreate, CompaniesList, CompanyProfile} from '../pages'
+import { JobsList, JobsInsert, JobsUpdate, CandidateList, UserProfile, CompanyCreate, CompaniesList, CompanyProfile, SignUp, LogIn} from '../pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -12,6 +12,8 @@ function App() {
         <Router>
             <NavBar />
             <Switch>
+                <Route path="/signup" exact component={SignUp} />
+                <Route path="/login" exact component={LogIn} />
                 <Route path="/jobs/list" exact component={JobsList} />
                 <Route path="/jobs/create" exact component={JobsInsert} />
                 <Route path="/jobs/update/:id" exact component={JobsUpdate} />

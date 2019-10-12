@@ -45,13 +45,3 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     });
 };
 
-module.exports.getUserByEmail = function(email, callback){
-    var query = {email: email};
-    console.log('MODEL');
-    UserSchema.findOne(query, callback);
-};
-
-module.exports.getUserById = function(id, callback){
-    UserSchema.findById(id, callback);
-};
-

@@ -13,6 +13,8 @@ export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
 //export const getCandidateById = id => api.get(`/candidate/${id}`);
 export const getUserById = id => api.get(`/user/${id}`);
+export const register = newUser => api.post(`/register`, newUser);
+export const login = newUser => api.post(`/login`, newUser);
 
 export const createCompany = payload => api.post(`/company/create`, payload);
 export const getAllCompanies = () => api.get(`/company/list`);
@@ -28,7 +30,9 @@ const apis = {
     getCandidates,
     createCompany,
     getAllCompanies,
-    getCompanyById
+    getCompanyById,
+    register,
+    login
 //    getCandidateById
 };
 
