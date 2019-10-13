@@ -143,7 +143,7 @@ const getCandidates =  (req, res) => {
 };
 
 getRecruiterById =  (req, res) => {
-    UserSchema.findOne({ _id: req.params.id, 'user_type' : 'RECRUITER'}).populate('company')
+    UserSchema.findOne({ _id: req.params.id, 'user_type' : 'RECRUITER'}).populate('company').populate('jobs')
         .exec((err, recruiter) => {
         if (err) {
             console.log(err);
@@ -158,7 +158,7 @@ getRecruiterById =  (req, res) => {
     });
 };
 
-const getRecruiters =  (req, res) => {
+const getRecruiters = (req, res) => {
     UserSchema.find({"user_type" : "RECRUITER"}, (err, candidate) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -186,9 +186,7 @@ updateRecruiter = (id, body, res) => {
         user.company = body.company;
 
         user.save().then(() => {
-
                 if (user.company && (user.company._id !== oldCompany._id)) {
-
                         CompanySchema.findById(body.company._id, (err, company) => {
                             company.recruiters.push({_id: user._id});
                             company.save();
@@ -206,6 +204,35 @@ updateRecruiter = (id, body, res) => {
     });
 };
 
+getPotentialCandidates = (req, res) => {
+    const jobLabels = req.body.labels.map(label => { return label._id });
+    UserSchema.find({"user_type" : "CANDIDATE"}).populate('labels').exec((err, candidates) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        let potentialCandidates = candidates.map(candidate => {
+            const candidateLabels = jobLabels.filter(label => candidate.labels.map(label => {return label._id }).includes(label));
+            const candidateMatchPercent = (candidateLabels.length / jobLabels.length) * 100;
+            if (candidateMatchPercent > req.body.matchPercent) {
+                candidate = {candidate: candidate, matchPercent: candidateMatchPercent};
+                return candidate;
+            } else {
+                return null;
+            }
+        });
+        if (!potentialCandidates.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Candidate not found` })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: potentialCandidates.filter(candidate => candidate != null)
+        });
+    });
+};
+
 module.exports = {
   //  signUp,
     register,
@@ -216,6 +243,7 @@ module.exports = {
     updateUserById,
     getCandidates,
     getCandidateById,
+    getPotentialCandidates,
     getRecruiters,
     getRecruiterById,
     getUsers,

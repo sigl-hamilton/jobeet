@@ -56,7 +56,7 @@ class CompanyProfile extends Component {
                         <div>{company.name}</div>
                     </Col>
                     <Col lg={6}>
-                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px", height:150}}>
+                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
                             <h5>Description</h5>
                             {company.description}
                         </div>

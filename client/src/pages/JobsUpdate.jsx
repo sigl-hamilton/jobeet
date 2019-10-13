@@ -1,131 +1,116 @@
 import React, { Component } from 'react'
 import api from '../api'
 
-import styled from 'styled-components'
-
-const Title = styled.h1.attrs({
-    className: 'h1',
-})``
-
-const Wrapper = styled.div.attrs({
-    className: 'form-group',
-})`
-    margin: 0 30px;
-`
-
-const Label = styled.label`
-    margin: 5px;
-`
-
-const InputText = styled.input.attrs({
-    className: 'form-control',
-})`
-    margin: 5px;
-`
-
-const Button = styled.button.attrs({
-    className: `btn btn-primary`,
-})`
-    margin: 15px 15px 15px 5px;
-`
-
-const CancelButton = styled.a.attrs({
-    className: `btn btn-danger`,
-})`
-    margin: 15px 15px 15px 5px;
-`
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Select from "react-select";
+import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import Row from "react-bootstrap/Row";
 
 class JobsUpdate extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        const jobProp = this.props.location.state.job;
+        const jobPropsLabels = jobProp.labels ? this.formatOptionLabels(jobProp.labels) : null;
 
         this.state = {
-            id: this.props.match.params.id,
-            name: '',
-            rating: '',
-            time: '',
-        }
-    }
+            user: this.props.location.state.user,
+            id: jobProp._id,
+            name: jobProp.name,
+            description: jobProp.description,
+            selectedLabels: jobPropsLabels,
+            optionLabels: {}
+        };
+    };
 
-    handleChangeInputName = async event => {
-        const name = event.target.value
-        this.setState({ name })
-    }
-
-    handleChangeInputRating = async event => {
-        const rating = event.target.validity.valid
-            ? event.target.value
-            : this.state.rating
-
-        this.setState({ rating })
-    }
-
-    handleChangeInputTime = async event => {
-        const time = event.target.value
-        this.setState({ time })
-    }
-
-    handleUpdateJob = async () => {
-        const { id, name, rating, time } = this.state
-        const arrayTime = time.split('/')
-        const payload = { name, rating, time: arrayTime }
-
-        await api.updateJobById(id, payload).then(res => {
-            window.alert(`Job updated successfully`)
-            this.setState({
-                name: '',
-                rating: '',
-                time: '',
-            })
-        })
-    }
+    formatOptionLabels = labels => {
+        return labels.map(
+            label => {
+                const skill = {};
+                skill.label = label.name;
+                skill.value = label._id;
+                skill.data = label;
+                return skill;
+            }
+        );
+    };
 
     componentDidMount = async () => {
-        const { id } = this.state
-        const job = await api.getJobById(id)
+        await api.getLabels().then( labels=> {
+            const allOptionLabels = this.formatOptionLabels(labels.data.data);
+            this.setState({optionLabels : allOptionLabels});
+        });
+    };
 
-        this.setState({
-            name: job.data.data.name,
-            rating: job.data.data.rating,
-            time: job.data.data.time.join('/'),
-        })
-    }
+    onSubmit = e => {
+        e.preventDefault();
+        const { name, description, user } = this.state;
+        const jobLabels = this.state.selectedLabels.map(label => { return label.data });
+        const payload = { name: name, description: description, labels: jobLabels, author: user };
+
+        api.updateJobById(this.state.id, payload).then(res => {
+            window.alert(`Job updated successfully`);
+            this.props.history.push({
+                pathname: '/user/' + this.state.user._id,
+                state: {user: this.state.user.user_type}
+            });
+        });
+    };
+
+    handleSelectChange = selectedLabels => {
+        this.setState({ selectedLabels });
+    };
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
 
     render() {
-        const { name, rating, time } = this.state
         return (
-            <Wrapper>
-                <Title>Create Job</Title>
-
-                <Label>Name: </Label>
-                <InputText
-                    type="text"
-                    value={name}
-                    onChange={this.handleChangeInputName}
-                />
-
-                <Label>Rating: </Label>
-                <InputText
-                    type="number"
-                    step="0.1"
-                    lang="en-US"
-                    min="0"
-                    max="10"
-                    pattern="[0-9]+([,\.][0-9]+)?"
-                    value={rating}
-                    onChange={this.handleChangeInputRating}
-                />
-
-                <Label>Time: </Label>
-                <InputText
-                    type="text"
-                    value={time}
-                    onChange={this.handleChangeInputTime}
-                />
-
-                <Button onClick={this.handleUpdateJob}>Update Job</Button>
-                <CancelButton href={'/jobs/list'}>Cancel</CancelButton>
-            </Wrapper>
+            <Container>
+                <h1>Update Job</h1>
+                <Form>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="name">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Job name"
+                                onChange={this.onChange}
+                                value={this.state.name}
+                            />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="description">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows="3"
+                                placeholder="Description of the job"
+                                onChange={this.onChange}
+                                value={this.state.description}
+                            />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Group controlId="labels">
+                        <Form.Label>Skills</Form.Label>
+                        <Select
+                            closeMenuOnSelect={false}
+                            isMulti
+                            options={this.state.optionLabels}
+                            onChange={this.handleSelectChange}
+                            value={this.state.selectedLabels}
+                        />
+                    </Form.Group>
+                    <Button variant="dark" onClick={this.onSubmit}>
+                        Update job
+                    </Button>
+                    <Button style={{marginLeft:'10px'}} variant="light" href={'/user/' + this.state}>Cancel</Button>
+                </Form>
+            </Container>
         )
     }
 }
