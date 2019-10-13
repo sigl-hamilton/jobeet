@@ -23,7 +23,7 @@ function permit(...allowed) {
   }
 }
 
-router.use("/job", permit("CANDIDATE"), jobRoutes);
+router.use("/job", permit("CANDIDATE", "RECRUITER"), jobRoutes);
 router.use("/account", accountRoutes);
 router.use("/user", userRoutes);
 router.use("/candidate", candidateRoutes);

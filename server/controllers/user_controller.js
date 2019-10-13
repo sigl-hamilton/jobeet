@@ -39,6 +39,10 @@ getUserByEmail = (email, callback) => {
     UserSchema.findOne(query, callback);
 };
 
+getDeserializeUser = function(id, callback){
+    UserSchema.findById(id, callback);
+};
+
 getUserById =  (req, res) => {
     UserSchema.findOne({ _id: req.params.id}).populate('labels').exec((err, user) => {
         if (err) {
@@ -164,6 +168,7 @@ module.exports = {
   //  signUp,
     register,
     login,
+    getDeserializeUser,
     getUserByEmail,
     getUserById,
     updateUserById,
