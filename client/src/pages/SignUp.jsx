@@ -12,7 +12,7 @@ class SignUp extends Component {
             email: "",
             password: "",
             password2: "",
-            user_type: "",
+            user_type: "CANDIDATE",
             errors: {}
         };
     }

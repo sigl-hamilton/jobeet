@@ -17,48 +17,38 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const router = require('./routes');
 
-app.use(cors());
+app.use(express.static('public'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 // Express Session
 app.use(session({
-    secret: 'work hard',
+    secret: 'mySecretKey',
     saveUninitialized: true,
-    resave: true
+    resave: false,
 }));
 
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-app.use('/api', router);
+passport.serializeUser(function(user, done) {
+    done(null, user._id);
+});
 
-app.post('/api/register', function(req, res) {
-    console.log('REGISTER');
-    const password = req.body.password;
-    const password2 = req.body.password2;
-    if (password === password2) {
-        const newUser = new UserSchema({
-            lastname: req.body.lastname,
-            firstname: req.body.firstname,
-            email: req.body.email,
-            password: req.body.password,
-            user_type: req.body.user_type
-        });
-        UserSchema.createUser(newUser, function(err, user){
-            if (err) throw err;
-            res.send(user).end();
-        });
-    } else {
-        res.status(500).send("{errors: \"Password don't match\"}").end();
-      //  res.status(11000).send("{errors: \"User already exist\"}").end();
-    }
+passport.deserializeUser(function(id, done) {
+    UserCtrl.getDeserializeUser(id, function(err, user) {
+        done(err, user);
+    });
 });
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -80,28 +70,11 @@ passport.use(new LocalStrategy (
     }
 ));
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    UserCtrl.getUserById(id, function(err, user) {
-        done(err, user);
-    });
-});
-
-app.post('/api/login',
-    passport.authenticate('local'),
-    function(req, res) {
-        console.log("LOGIN");
-        res.send(req.user);
-    }
-);
+app.use('/api', router);
 
 // Endpoint to get current user
 
 app.get('/user', function(req, res){
-    console.log(req.user);
     res.send(req.user);
 });
 
@@ -110,4 +83,5 @@ app.get('/logout', function(req, res){
     req.logout();
     res.send(null)
 });
+
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
