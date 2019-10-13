@@ -15,5 +15,10 @@ import LabelList from './LabelList'
 import LabelInsert from './LabelInsert'
 import LabelUpdate from './LabelUpdate'
 
+import CompanyList from './CompanyList'
+import CompanyInsert from './CompanyInsert'
+import CompanyUpdate from './CompanyUpdate'
+import CompanyProfile from './CompanyProfile'
+
 export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
-    LabelList, LabelInsert, LabelUpdate}
+    LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile}

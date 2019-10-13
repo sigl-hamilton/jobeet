@@ -5,6 +5,8 @@ const userRoutes = require('./user');
 const candidateRoutes = require('./candidate');
 const recruiterRoutes = require('./recruiter');
 const labelRoutes = require('./label');
+const companyRoutes = require('./company');
+
 const UserCtrl = require('../controllers/user_controller');
 const router = express.Router();
 const passport = require('passport');
@@ -29,6 +31,7 @@ router.use("/user", userRoutes);
 router.use("/candidate", candidateRoutes);
 router.use("/recruiter", recruiterRoutes);
 router.use("/label", labelRoutes);
+router.use("/company", companyRoutes);
 
 router.post('/register', UserCtrl.register);
 router.post('/login',  passport.authenticate('local', {session: true} ), UserCtrl.login);

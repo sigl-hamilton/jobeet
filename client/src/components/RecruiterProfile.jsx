@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Avatar from 'react-avatar';
 import {Link} from "react-router-dom";
+import Badge from "react-bootstrap/Badge";
 
 
 class RecruiterProfile extends Component {
@@ -16,6 +17,16 @@ class RecruiterProfile extends Component {
     }
 
     render() {
+        const company = (!this.state.recruiter.company) ?
+            <Link to={{ pathname: '/company/create', state: { user: this.state.recruiter }}}
+                  className="btn btn-dark" variant="dark"
+            > Create a Company </Link>
+            : <Link to={{
+                pathname: '/company/' + this.state.recruiter.company._id,
+                state: { user: this.state.recruiter }
+            }}
+                className="btn btn-dark" variant="dark"
+            > <Badge>{this.state.recruiter.company.name}</Badge> </Link>;
         return (
             <Container>
                 <Row style={{background:'#aaa4a3', borderRadius: '10px'}}>
@@ -45,6 +56,9 @@ class RecruiterProfile extends Component {
                     <Col lg={3} style={{background:'#aaa4a3', borderRadius: '10px'}}>
                         <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>
                             Company
+                        </div>
+                        <div style={{fontSize: '20px', textAlign: 'center', margin: '10px'}}>
+                            {company}
                         </div>
                     </Col>
                     <Col style={{backgroundColor:'#aaa4a3', borderRadius: '10px', marginLeft: '10px', padding:'10px'}}>
