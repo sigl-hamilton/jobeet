@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
+import enterprise from '../img/enterprise.png';
 import api from '../api'
 
 import 'react-table/react-table.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Container from "react-bootstrap/Container";
-import Badge from "react-bootstrap/Badge";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import CardDeck from "react-bootstrap/CardDeck";
 
 class CompanyList extends Component {
     constructor(props) {
@@ -35,24 +37,34 @@ class CompanyList extends Component {
         return (
             <Container>
                 <h1>List of companies</h1>
-                <div>
+                <div style={{paddingBottom: '10px'}}>
                     <Link to={{ pathname: '/company/create'}} className="btn btn-dark" variant="dark">
                         Add a new Company
                     </Link>
                 </div>
                 <div>
-                {
-                    companies.map(company => {
-                        return <Badge style={{fontSize: "20px", margin: '5px'}} variant="dark">
-                            {company.name}
-                            <Link to={{
-                                pathname: '/company/update/'+ company._id,
-                                state: { company: company }
-                            }} style={{ color: "white" }}
-                            > <FontAwesomeIcon icon="pen" size="xs"/></Link>
-                        </Badge>;
-                    })
-                }
+                    <CardDeck>
+                        {
+                            companies.map(company => {
+                                return <Card bg="dark" text="white" style={{ width: '18rem' }}>
+                                    <Card.Img style={{backgroundColor: 'white'}} variant="top" src={enterprise}/>
+                                    <Card.Body>
+                                        <Card.Title>{company.name}</Card.Title>
+                                        <Card.Text>
+                                            {company.description}
+                                        </Card.Text>
+                                        <Link to={{
+                                            pathname: '/company/'+ company._id,
+                                            state: { company: company }
+                                        }}
+                                              className="btn btn-light"
+                                              variant="light"
+                                        > See more</Link>
+                                    </Card.Body>
+                                </Card>
+                            })
+                        }
+                    </CardDeck>
                 </div>
             </Container>
         )
