@@ -45,7 +45,7 @@ getDeserializeUser = function(id, callback){
 };
 
 getUserById =  (req, res) => {
-    UserSchema.findOne({ _id: req.params.id}).populate('labels').exec((err, user) => {
+    UserSchema.findOne({ _id: req.params.id}).exec((err, user) => {
         if (err) {
             console.log(err);
             return res.status(400).json({ success: false, error: err });
@@ -91,7 +91,6 @@ updateCandidate = (id, body, res) => {
         if (err) {
             return res.status(404).json({ err, message: 'User not found!',})
         }
-        console.log(body);
         user.firstname = body.firstname;
         user.lastname = body.lastname;
         user.email = body.email;
@@ -110,8 +109,10 @@ updateCandidate = (id, body, res) => {
 };
 
 getCandidateById = (req, res) => {
-    UserSchema.findOne({ id: req.params.id , "user_type" : "CANDIDATE"}, (err, candidate) => {
+    UserSchema.findOne({ _id: req.params.id }).populate('labels')
+        .exec( (err, candidate) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ success: false, error: err })
         }
         if (!candidate) {
@@ -120,7 +121,7 @@ getCandidateById = (req, res) => {
                 .json({ success: false, error: `Candidate not found` })
         }
         return res.status(200).json({ success: true, data: candidate })
-    }).catch(err => console.log(err))
+    })
 };
 
 const getCandidates =  (req, res) => {
@@ -138,17 +139,20 @@ const getCandidates =  (req, res) => {
 };
 
 getRecruiterById =  (req, res) => {
-    UserSchema.findOne({ id: req.params.id , "user_type" : "RECRUITER"}, (err, candidate) => {
+    UserSchema.findOne({ _id: req.params.id, 'user_type' : 'RECRUITER'}).populate('company')
+        .exec((err, recruiter) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ success: false, error: err })
         }
-        if (!candidate) {
+        console.log(recruiter);
+        if (!recruiter) {
             return res
                 .status(404)
                 .json({ success: false, error: `Recruiter not found` })
         }
-        return res.status(200).json({ success: true, data: candidate })
-    }).catch(err => console.log(err))
+        return res.status(200).json({ success: true, data: recruiter })
+    });
 };
 
 const getRecruiters =  (req, res) => {

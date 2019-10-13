@@ -50,6 +50,16 @@ class Links extends Component {
                     Label List
                 </Link>
             </Item>
+            <Item>
+                <Link to="/company/create" className="nav-link">
+                    Company Create
+                </Link>
+            </Item>
+            <Item>
+                <Link to="/company/list" className="nav-link">
+                    Company List
+                </Link>
+            </Item>
         </List>
         )
     }

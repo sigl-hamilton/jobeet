@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import api from '../api'
-import {CandidateLine} from '../components'
-import {RecruiterLine} from '../components'
+import {UserLine} from '../components'
 
 import 'react-table/react-table.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,25 +33,17 @@ class UserList extends Component {
         if (!users.length) { showTable = false; }
         return (
             <Container>
-                {users.map(user => {
-                    return user.user_type === 'CANDIDATE' ?
-                        <CandidateLine
+                {users.map(
+                    user =>
+                        <UserLine
                             firstname={user.firstname}
                             lastname={user.lastname}
                             phone={user.phone}
                             description={user.description}
                             user_type={user.user_type}
-                            id = {user._id}
+                            id={user._id}
                         />
-                        : <RecruiterLine
-                            firstname={user.firstname}
-                            lastname={user.lastname}
-                            phone={user.phone}
-                            description={user.description}
-                            user_type={user.user_type}
-                            id = {user._id}
-                        />;
-                    })
+                    )
                 }
             </Container>
         )

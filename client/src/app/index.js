@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { NavBar } from '../components'
-import { JobsList, JobsInsert, JobsUpdate, CandidateList, CandidateUpdate, UserProfile, SignUp, LogIn, UserList} from '../pages'
+import { UserProfile, SignUp, LogIn, UserList } from '../pages'
+import { JobsList, JobsInsert, JobsUpdate} from '../pages'
+import { CandidateList, CandidateUpdate } from '../pages'
 import { LabelList, LabelInsert, LabelUpdate} from '../pages'
+import { CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile} from '../pages'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -32,10 +35,14 @@ class App extends Component {
                     <Route path="/label/create" exact component={LabelInsert} />
                     <Route path="/label/list" exact component={LabelList} />
                     <Route path="/label/update/:id" exact component={LabelUpdate} />
+                    <Route path="/company/create" exact component={CompanyInsert} />
+                    <Route path="/company/list" exact component={CompanyList} />
+                    <Route path="/company/update/:id" exact component={CompanyUpdate} />
+                    <Route path="/company/:id" exact component={CompanyProfile} />
                 </Switch>
             </Router>
-        );
+        )
     }
 }
 
-export default App
+export default App;

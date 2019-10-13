@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import api from '../api'
-import {CandidateLine} from '../components'
 
 import 'react-table/react-table.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Container from "react-bootstrap/Container";
+import UserLine from "../components/UserLine";
 
 class CandidateList extends Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class CandidateList extends Component {
         return (
             <Container>
                 {candidates.map(x =>
-                    <CandidateLine
+                    <UserLine
                         firstname={x.firstname}
                         lastname={x.lastname}
                         phone={x.phone}
