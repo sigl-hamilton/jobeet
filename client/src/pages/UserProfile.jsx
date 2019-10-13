@@ -11,21 +11,33 @@ import RecruiterProfile from "../components/RecruiterProfile";
 class UserProfile extends Component {
     constructor(props) {
         super(props);
+        console.log(props);
+
         this.state = {
-            idUser: props.match.params.id,
+            idUser: this.props.match.params.id,
             isLoading: false,
-            user: null
+            user: null,
+            userType: this.props.location.state.user_type
         }
     }
 
     componentDidMount = async () => {
         this.setState({ isLoading: true });
-        await api.getUserById(this.state.idUser).then(user => {
-            this.setState({
-                user: user.data.data,
-                isLoading: false,
-            })
-        })
+        if (this.state.userType === "CANDIDATE") {
+            await api.getCandidateById(this.state.idUser).then(user => {
+                this.setState({
+                    user: user.data.data,
+                    isLoading: false,
+                });
+            });
+        } else {
+            await api.getRecruiterById(this.state.idUser).then(user => {
+                this.setState({
+                    user: user.data.data,
+                    isLoading: false,
+                });
+            });
+        }
 
     };
 
