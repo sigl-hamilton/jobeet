@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import api from '../api'
+import React, { Component } from 'react';
+import api from '../api';
 
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import CompanyProfileBody from "../components/CompanyProfileBody";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Avatar from "react-avatar";
@@ -79,6 +80,9 @@ class CompanyProfile extends Component {
                         <div style={{fontSize: '20px', textAlign: 'center', margin: '10px'}}>
                             {recruiters}
                         </div>
+                    </Col>
+                    <Col style={{backgroundColor:'#aaa4a3', borderRadius: '10px', marginLeft: '10px', padding:'10px'}}>
+                        <CompanyProfileBody recruiters={this.state.company.recruiters}/>
                     </Col>
                 </Row>
             </Container>
