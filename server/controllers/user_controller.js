@@ -14,6 +14,7 @@ register = (req, res) => {
             firstname: req.body.firstname,
             email: req.body.email,
             password: req.body.password,
+            user_type: req.body.user_type
         });
         UserSchema.createUser(newUser, function(err, user){
             if (err) throw err;

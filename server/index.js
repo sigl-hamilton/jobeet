@@ -46,7 +46,6 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    console.log("here");
     UserCtrl.getDeserializeUser(id, function(err, user) {
         done(err, user);
     });
@@ -76,7 +75,6 @@ app.use('/api', router);
 // Endpoint to get current user
 
 app.get('/user', function(req, res){
-    console.log(req.user);
     res.send(req.user);
 });
 
