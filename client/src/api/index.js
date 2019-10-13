@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL: 'http://localhost:3000/api',
+    withCredentials: true,
 });
 
 export const insertJob = payload => api.post(`/job`, payload);
@@ -17,7 +18,9 @@ export const getUsers = () => api.get(`/user/list`);
 export const getUserById = id => api.get(`/user/${id}`);
 export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const register = newUser => api.post(`/register`, newUser);
-export const login = newUser => api.post(`/login`, newUser);
+export const login = newUser => api.post(`/login`, newUser).then(response => {
+    console.log(response.data);
+});
 
 export const insertLabel = payload => api.post(`/label`, payload);
 export const getLabels = () => api.get(`/label/list`);
