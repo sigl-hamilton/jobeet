@@ -39,8 +39,11 @@ class CompanyProfile extends Component {
         const company  = this.state.company;
 
         const recruiters = this.state.company.recruiters.map( recruiter => {
-            return <Link key={recruiter._id} to={{ pathname: '/user/'+ recruiter._id, state: { user_type: recruiter.user_type }}}
-                    className="btn btn-dark" variant="dark"
+            return <Link
+                key={ recruiter._id }
+                to={{ pathname: '/user/'+ recruiter._id, state: { user_type: recruiter.user_type }}}
+                className="btn btn-dark" variant="dark"
+                style={{marginBottom: '10px'}}
             ><Avatar name={recruiter.firstname + ' ' + recruiter.lastname} size={30} round={false} style={{ margin:'5px'}}/>
             <Badge>{recruiter.firstname + ' ' + recruiter.lastname}</Badge>
             </Link>;

@@ -6,6 +6,7 @@ import { NavBar } from '../components'
 import { UserProfile, SignUp, LogIn, UserList } from '../pages'
 import { JobsList, JobsInsert, JobsUpdate} from '../pages'
 import { CandidateList, CandidateUpdate } from '../pages'
+import { RecruiterUpdate } from '../pages'
 import { LabelList, LabelInsert, LabelUpdate} from '../pages'
 import { CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile} from '../pages'
 
@@ -30,6 +31,7 @@ class App extends Component {
                     <Route path="/jobs/update/:id" exact component={JobsUpdate} />
                     <Route path="/candidate/list/" exact component={CandidateList} />
                     <Route path="/candidate/update/:id" exact component={CandidateUpdate} />
+                    <Route path="/recruiter/update/:id" exact component={RecruiterUpdate} />
                     <Route path="/user/list" exact component={UserList} />
                     <Route path="/user/:id" exact component={UserProfile} />
                     <Route path="/label/create" exact component={LabelInsert} />

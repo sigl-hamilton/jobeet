@@ -8,11 +8,14 @@ import Select from "react-select";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 
-class CandidateUpdate extends Component {
+class RecruiterUpdate extends Component {
     constructor(props) {
         super(props);
         const userProps = this.props.location.state.user;
-        const userPropsLabels = userProps.labels ? this.formatOptionLabels(userProps.labels) : null;
+
+        const companyProp = userProps.company ?
+            { label: userProps.company.name, value: userProps.company._id, data: userProps.company }
+            : null;
 
         this.state = {
             user: userProps,
@@ -21,11 +24,10 @@ class CandidateUpdate extends Component {
             lastname: userProps.lastname,
             phone: userProps.phone,
             description: userProps.description,
-            job_status: userProps.job_status,
             user_type: userProps.user_type,
+            company: companyProp,
             errors: {},
-            selectedLabels: userPropsLabels,
-            optionLabels: {},
+            optionCompanies: {},
         };
     };
 
@@ -34,49 +36,46 @@ class CandidateUpdate extends Component {
             return "Enter " + placeholderType;
     };
 
-    formatOptionLabels = labels => {
-        return labels.map(
-            label => {
-                const skill = {};
-                skill.label = label.name;
-                skill.value = label._id;
-                skill.data = label;
-                return skill;
+    formatOptionCompanies = companies => {
+        return companies.map(
+            company => {
+                const companyFormated = {};
+                companyFormated.label = company.name;
+                companyFormated.value = company._id;
+                companyFormated.data = company;
+                return companyFormated;
             }
         );
     };
 
     componentDidMount = async () => {
-        await api.getLabels().then( labels=> {
-            const allOptionLabels = this.formatOptionLabels(labels.data.data);
-            this.setState({optionLabels : allOptionLabels});
+        await api.getCompanies().then(companies => {
+            const optionCompanies = this.formatOptionCompanies(companies.data.data);
+            this.setState({optionCompanies : optionCompanies});
         });
-    };
-
-    handleChange = selectedLabels => {
-        this.setState({ selectedLabels });
     };
 
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
 
+    handleSelectChange = company => {
+        this.setState({ company });
+    };
+
     onSubmit = e => {
         e.preventDefault();
-        const userDataLabels = this.state.selectedLabels.map(label => { return label.data });
         const userData = {
             email: this.state.email,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
             phone: this.state.phone,
             description: this.state.description,
-            job_status: this.state.job_status,
             user_type: this.state.user_type,
-            labels: userDataLabels,
+            company: this.state.company ? this.state.company.data : null,
         };
-
         api.updateUserById(this.state.user._id, userData).then(res => {
-            window.alert(`Candidate Updated`);
+            window.alert(`Recruiter Updated`);
             this.props.history.push({
                 pathname: '/user/' + this.state.user._id,
                 state: {'user_type': this.state.user_type}
@@ -88,7 +87,7 @@ class CandidateUpdate extends Component {
         const { errors } = this.state;
         return (
             <Container>
-                <h1>Update Candidate</h1>
+                <h1>Update Recruiter</h1>
                 <Form>
                     <Form.Row>
                         <Form.Group as={Col} controlId="email">
@@ -125,16 +124,7 @@ class CandidateUpdate extends Component {
                     </Form.Row>
 
                     <Form.Row>
-                        <Form.Group as={Col} controlId="job_status">
-                            <Form.Label>Your current status</Form.Label>
-                            <Form.Control as="select" onChange={this.onChange}>
-                                <option value="ACTIVE">Actively looking for a job</option>
-                                <option value="PASSIVE">Looking for a job</option>
-                                <option value="INACTIVE">Don't looking for a job</option>
-                            </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="phone">
+                        <Form.Group as={Col} md="6" controlId="phone">
                             <Form.Label>Phone</Form.Label>
                             <PhoneInput
                                 placeholder="Enter phone number"
@@ -149,13 +139,12 @@ class CandidateUpdate extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="labels">
-                        <Form.Label>Skills</Form.Label>
+                        <Form.Label>Company</Form.Label>
                         <Select
                             closeMenuOnSelect={false}
-                            isMulti
-                            options={this.state.optionLabels}
-                            onChange={this.handleChange}
-                            value={this.state.selectedLabels}
+                            options={this.state.optionCompanies}
+                            onChange={this.handleSelectChange}
+                            value={this.state.company}
                         />
                     </Form.Group>
                     <Button variant="dark" onClick={this.onSubmit}>
@@ -166,4 +155,4 @@ class CandidateUpdate extends Component {
         );
     };
 };
-export default CandidateUpdate;
+export default RecruiterUpdate;

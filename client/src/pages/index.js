@@ -5,11 +5,13 @@ import JobsUpdate from './JobsUpdate'
 import SignUp from './SignUp'
 import LogIn from './LogIn'
 
+import UserProfile from "./UserProfile";
+import UserList from "./UserList";
+
 import CandidateList from "./CandidateList";
 import CandidateUpdate from "./CandidateUpdate"
 
-import UserProfile from "./UserProfile";
-import UserList from "./UserList";
+import RecruiterUpdate from "./RecruiterUpdate";
 
 import LabelList from './LabelList'
 import LabelInsert from './LabelInsert'
@@ -21,4 +23,4 @@ import CompanyUpdate from './CompanyUpdate'
 import CompanyProfile from './CompanyProfile'
 
 export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
-    LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile}
+    RecruiterUpdate, LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile}
