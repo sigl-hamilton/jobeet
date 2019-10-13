@@ -22,7 +22,7 @@ class UserProfile extends Component {
         this.setState({ isLoading: true });
         await api.getUserById(this.state.idUser).then(user => {
             this.setState({
-                user: user.data.data,
+                user: user.data,
                 isLoading: false,
             })
         })

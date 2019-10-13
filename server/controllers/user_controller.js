@@ -1,89 +1,39 @@
-
 const UserSchema = require('../models/user_model');
 const LabelSchema = require('../models/label_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const passport = require('passport');
 
+register = (req, res) => {
+    console.log('REGISTER');
+    const password = req.body.password;
+    const password2 = req.body.password2;
+    if (password === password2) {
+        const newUser = new UserSchema({
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            email: req.body.email,
+            password: req.body.password,
+        });
+        UserSchema.createUser(newUser, function(err, user){
+            if (err) throw err;
+            res.send(user).end();
+        });
+    } else {
+        res.status(500).send("{errors: \"Password don't match\"}").end();
+      //  res.status(11000).send("{errors: \"User already exist\"}").end();
+    }
+}
 
-/*
-signUp = (req, res) => {
-    let {firstname, lastname, email, passwordHash} = req.body; // this is called destructuring. We're extracting these variables and their values from 'req.body'
+login = (req, res) => {
+    console.log("LOGIN");
+    res.send(req.user);
+}
 
-    let userData = {
-        firstname,
-        lastname,
-        passwordHash: bcrypt.hashSync(passwordHash, 5), // we are using bcrypt to hash our password before saving it to the database
-        email
-    };
+getCurrentUser = (req, res) => {
+    res.send(req.user);
+}
 
-    let newUser = new UserSchema(userData);
-    newUser.save().then(error => {
-        if (!error) {
-            return res.status(201).json('signup successful')
-        } else {
-            if (error.code === 11000) { // this error gets thrown only if similar user record already exist.
-                return res.status(409).send('user already exist!')
-            } else {
-                console.log(JSON.stringify(error, null, 2)); // you might want to do this to examine and trace where the problem is emanating from
-                return res.status(500).send('error signing up user')
-            }
-        }
-    })
-};
-*/
-/*
-2. User Sign in
-=============
-
-logIn = (req, res) => {
-  let {email, passwordHash} = req.body;
-    UserSchema.findOne({email: email}, 'firstname lastname email passwordHash', (err, userData) => {
-    	if (!err) {
-        	let passwordCheck = bcrypt.compareSync(passwordHash, userData.passwordHash);
-        	if (passwordCheck) { // we are using bcrypt to check the password hash from db against the supplied password by user
-                req.session.user = {
-                  email: userData.email,
-                  firstname: userData.firstname,
-                  lastname: userData.lastname,
-                  id: userData._id
-                }; // saving some user's data into user's session
-                req.session.user.expires = new Date(
-                  Date.now() + 3 * 24 * 3600 * 1000 // session expires in 3 days
-                );
-                res.status(200).send('You are logged in, Welcome!');
-            } else {
-            	res.status(401).send('incorrect password');
-            }
-        } else {
-        	res.status(401).send('invalid login credentials')
-        }
-    })
-};
-*/
-/*
-getUserById = (req, res) => {
-    let id = req.params.id;
-    UserSchema.findOne({ id: req.params.id }, (err, user) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!user) {
-            return res
-                .status(404)
-                .json({ success: false, error: `User not found` })
-        }
-        return res.status(200).json({ success: true, data: user })
-    }).catch(err => console.log(err));
-};
-*/
-/*
-module.exports.getUserByEmail = function(email, callback){
-    var query = {email: email};
-    console.log('MODEL');
-    UserSchema.findOne(query, callback);
-};
-*/
 getUserByEmail = (email, callback) => {
     var query = {email: email};
     UserSchema.findOne(query, callback);
@@ -212,8 +162,8 @@ const getRecruiters =  (req, res) => {
 
 module.exports = {
   //  signUp,
-    //register,
-    //logIn,
+    register,
+    login,
     getUserByEmail,
     getUserById,
     updateUserById,

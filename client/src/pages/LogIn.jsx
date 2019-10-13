@@ -22,7 +22,7 @@ class LogIn extends Component {
         };
         api.login(userData).then(res => {
             window.alert(`User logged`);
-
+            console.log(res);
         });
     };
 
