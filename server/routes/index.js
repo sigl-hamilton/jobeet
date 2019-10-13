@@ -12,7 +12,9 @@ const router = express.Router();
 const passport = require('passport');
 
 // middleware for doing role-based permissions
+
 function permit(...allowed) {
+  /*
   const isAllowed = role => allowed.indexOf(role) > -1;
 
   // return a middleware
@@ -23,9 +25,11 @@ function permit(...allowed) {
       response.status(403).json({message: "Forbidden"}); // user is forbidden
     }
   }
-}
 
-router.use("/job", permit("CANDIDATE", "RECRUITER"), jobRoutes);
+   */
+}
+// permit("CANDIDATE", "RECRUITER")
+router.use("/job", jobRoutes);
 router.use("/account", accountRoutes);
 router.use("/user", userRoutes);
 router.use("/candidate", candidateRoutes);

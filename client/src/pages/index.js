@@ -1,6 +1,7 @@
 import JobsList from './JobsList'
 import JobsInsert from './JobsInsert'
 import JobsUpdate from './JobsUpdate'
+import JobInfo from './JobInfo'
 
 import SignUp from './SignUp'
 import LogIn from './LogIn'
@@ -22,5 +23,5 @@ import CompanyInsert from './CompanyInsert'
 import CompanyUpdate from './CompanyUpdate'
 import CompanyProfile from './CompanyProfile'
 
-export { JobsList, JobsInsert, JobsUpdate, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
+export { JobsList, JobsInsert, JobsUpdate, JobInfo, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
     RecruiterUpdate, LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile}
