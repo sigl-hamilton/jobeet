@@ -1,4 +1,5 @@
 const Job = require('../models/job_model');
+const UserSchema = require('../models/user_model');
 
 createJob = (req, res) => {
     const body = req.body;
@@ -7,58 +8,39 @@ createJob = (req, res) => {
     }
 
     const job = new Job(body);
-    if (!job) { return res.status(400).json({ success: false, error: err })}
-
+    if (!job) { return res.status(400).json({ success: false, error: res.err })}
     job.save()
         .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: job._id,
-                message: 'Job created!',
-            })
+            UserSchema.findById(body.author._id, (err, recruiter) => {
+                    recruiter.jobs.push({ _id: job._id });
+                    recruiter.save()
+                }
+            );
+            return res.status(201).json({ success: true, id: job._id, message: 'Job created!'});
         })
         .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Job not created!',
-            })
+            return res.status(400).json({ error, message: 'Job not created!' });
         })
 };
 
 updateJob = async (req, res) => {
-    const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a body to update',
-        })
-    }
+    const body = req.body;
+    if (!body) { return res.status(400).json({ success: false, error: 'You must provide a Job' }); }
 
     Job.findOne({ _id: req.params.id }, (err, job) => {
         if (err) {
-            return res.status(404).json({
-                err,
-                message: 'Job not found!',
-            })
+            return res.status(404).json({ err, message: 'Job not found!' })
         }
-        job.name = body.name
-        job.time = body.time
-        job.rating = body.rating
-        job
-            .save()
+
+        job.name = body.name;
+        job.description = body.description;
+        job.labels = body.labels;
+        job.save()
             .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: job._id,
-                    message: 'Job updated!',
-                })
+                return res.status(200).json({ success: true, id: job._id, message: 'Job updated!'});
             })
             .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Job not updated!',
-                })
+                return res.status(404).json({ error, message: 'Job not updated!'})
             })
     })
 };
@@ -79,9 +61,11 @@ deleteJob = async (req, res) => {
     }).catch(err => console.log(err))
 };
 
-getJobById = async (req, res) => {
-    await Job.findOne({ _id: req.params.id }, (err, job) => {
+getJobById = (req, res) => {
+    Job.findOne({ _id: req.params.id }).populate('author').populate('labels')
+        .exec((err, job) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ success: false, error: err })
         }
 
@@ -91,7 +75,7 @@ getJobById = async (req, res) => {
                 .json({ success: false, error: `Job not found` })
         }
         return res.status(200).json({ success: true, data: job })
-    }).catch(err => console.log(err))
+    })
 };
 
 getJobs = (req, res) => {

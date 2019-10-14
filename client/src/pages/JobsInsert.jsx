@@ -43,13 +43,15 @@ class JobsInsert extends Component {
         e.preventDefault();
         const { name, description, user } = this.state;
         const jobLabels = this.state.selectedLabels.map(label => { return label.data });
-
-        const payload = { name, description, labels: jobLabels, author: user };
+        const payload = { name: name, description: description, labels: jobLabels, author: user };
 
         api.insertJob(payload).then(res => {
             window.alert(`Job inserted successfully`);
-            this.props.history.push('/user/' + this.state.user._id);
-        })
+            this.props.history.push({
+                pathname: '/user/' + this.state.user._id,
+                state: {user: this.state.user.user_type}
+            });
+        });
     };
 
     handleSelectChange = selectedLabels => {

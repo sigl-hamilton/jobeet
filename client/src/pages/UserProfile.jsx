@@ -11,8 +11,6 @@ import RecruiterProfile from "../components/RecruiterProfile";
 class UserProfile extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
-
         this.state = {
             idUser: this.props.match.params.id,
             isLoading: false,

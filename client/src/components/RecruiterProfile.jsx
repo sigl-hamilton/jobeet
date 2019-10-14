@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Avatar from 'react-avatar';
 import {Link} from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
+import RecruiterProfileBody from "./RecruiterProfileBody";
 
 
 class RecruiterProfile extends Component {
@@ -34,6 +35,7 @@ class RecruiterProfile extends Component {
                     <Col lg={2} style={{textAlign: 'left', paddingTop:'10px'}}>
                         <div>{this.state.recruiter.firstname} {this.state.recruiter.lastname}</div>
                         <div>{this.state.recruiter.phone}</div>
+                        <div>{this.state.recruiter.email}</div>
                     </Col>
                     <Col lg={6}>
                         <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px", height:150}}>
@@ -62,9 +64,7 @@ class RecruiterProfile extends Component {
                         </div>
                     </Col>
                     <Col style={{backgroundColor:'#aaa4a3', borderRadius: '10px', marginLeft: '10px', padding:'10px'}}>
-                        <Link to={{ pathname: '/jobs/create', state: { user: this.state.recruiter }}}
-                              className="btn btn-dark" variant="dark"
-                        > Create a job </Link>
+                        <RecruiterProfileBody recruiter={ this.state.recruiter } />
                     </Col>
                 </Row>
             </Container>

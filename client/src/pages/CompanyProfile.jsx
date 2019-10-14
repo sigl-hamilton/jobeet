@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import api from '../api'
+import React, { Component } from 'react';
+import api from '../api';
 
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import CompanyProfileBody from "../components/CompanyProfileBody";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Avatar from "react-avatar";
@@ -39,8 +40,11 @@ class CompanyProfile extends Component {
         const company  = this.state.company;
 
         const recruiters = this.state.company.recruiters.map( recruiter => {
-            return <Link key={recruiter._id} to={{ pathname: '/user/'+ recruiter._id, state: { user_type: recruiter.user_type }}}
-                    className="btn btn-dark" variant="dark"
+            return <Link
+                key={ recruiter._id }
+                to={{ pathname: '/user/'+ recruiter._id, state: { user_type: recruiter.user_type }}}
+                className="btn btn-dark" variant="dark"
+                style={{marginBottom: '10px'}}
             ><Avatar name={recruiter.firstname + ' ' + recruiter.lastname} size={30} round={false} style={{ margin:'5px'}}/>
             <Badge>{recruiter.firstname + ' ' + recruiter.lastname}</Badge>
             </Link>;
@@ -52,7 +56,7 @@ class CompanyProfile extends Component {
                         <div>{company.name}</div>
                     </Col>
                     <Col lg={6}>
-                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px", height:150}}>
+                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
                             <h5>Description</h5>
                             {company.description}
                         </div>
@@ -76,6 +80,9 @@ class CompanyProfile extends Component {
                         <div style={{fontSize: '20px', textAlign: 'center', margin: '10px'}}>
                             {recruiters}
                         </div>
+                    </Col>
+                    <Col style={{backgroundColor:'#aaa4a3', borderRadius: '10px', marginLeft: '10px', padding:'10px'}}>
+                        <CompanyProfileBody recruiters={this.state.company.recruiters}/>
                     </Col>
                 </Row>
             </Container>

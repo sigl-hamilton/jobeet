@@ -1,6 +1,5 @@
 const CompanySchema = require('../models/company_model');
 const UserSchema = require('../models/user_model');
-const UserCtrl = require('../controllers/user_controller');
 
 createCompany = (req, res) => {
     const body = req.body;
@@ -32,7 +31,6 @@ getCompanyById =  (req, res) => {
             console.log(err);
             return res.status(400).json({ success: false, error: err });
         }
-        console.log(company);
         if (!company) {
             return res
                 .status(404)

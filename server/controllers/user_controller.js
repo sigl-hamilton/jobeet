@@ -1,4 +1,5 @@
 const UserSchema = require('../models/user_model');
+const CompanySchema = require('../models/company_model');
 const LabelSchema = require('../models/label_model');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
@@ -84,12 +85,15 @@ updateUserById =  (req, res) => {
     if (body.user_type === 'CANDIDATE') {
         return updateCandidate(req.params.id, body, res);
     }
+    if (body.user_type === 'RECRUITER') {
+        return updateRecruiter(req.params.id, body, res);
+    }
 };
 
 updateCandidate = (id, body, res) => {
-    UserSchema.findOne({ _id: id }, (err, user) => {
+    UserSchema.findOne({ _id: id, "user_type": "CANDIDATE" }, (err, user) => {
         if (err) {
-            return res.status(404).json({ err, message: 'User not found!',})
+            return res.status(404).json({ err, message: 'Candidate not found!',})
         }
         user.firstname = body.firstname;
         user.lastname = body.lastname;
@@ -100,16 +104,16 @@ updateCandidate = (id, body, res) => {
         user.labels = body.labels;
         user.save()
             .then(() => {
-                return res.status(200).json({success: true, id: user._id, message: 'User updated!'})
+                return res.status(200).json({success: true, id: user._id, message: 'Candidate updated!'})
             })
             .catch(error => {
-                return res.status(404).json({ error, message: 'User not updated!' })
+                return res.status(404).json({ error, message: 'Candidate not updated!' })
             });
     });
 };
 
 getCandidateById = (req, res) => {
-    UserSchema.findOne({ _id: req.params.id }).populate('labels')
+    UserSchema.findOne({ _id: req.params.id, "user_type": "CANDIDATE"}).populate('labels')
         .exec( (err, candidate) => {
         if (err) {
             console.log(err);
@@ -139,13 +143,12 @@ const getCandidates =  (req, res) => {
 };
 
 getRecruiterById =  (req, res) => {
-    UserSchema.findOne({ _id: req.params.id, 'user_type' : 'RECRUITER'}).populate('company')
+    UserSchema.findOne({ _id: req.params.id, 'user_type' : 'RECRUITER'}).populate('company').populate('jobs')
         .exec((err, recruiter) => {
         if (err) {
             console.log(err);
             return res.status(400).json({ success: false, error: err })
         }
-        console.log(recruiter);
         if (!recruiter) {
             return res
                 .status(404)
@@ -155,7 +158,7 @@ getRecruiterById =  (req, res) => {
     });
 };
 
-const getRecruiters =  (req, res) => {
+const getRecruiters = (req, res) => {
     UserSchema.find({"user_type" : "RECRUITER"}, (err, candidate) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -169,6 +172,67 @@ const getRecruiters =  (req, res) => {
     }).catch(err => console.log(err))
 };
 
+updateRecruiter = (id, body, res) => {
+    UserSchema.findOne({ _id: id, "user_type": "RECRUITER" }, (err, user) => {
+        if (err) {
+            return res.status(404).json({ err, message: 'Recruiter not found!',})
+        }
+        user.firstname = body.firstname;
+        user.lastname = body.lastname;
+        user.email = body.email;
+        user.phone = body.phone;
+        user.description = body.description;
+        const oldCompany = user.company;
+        user.company = body.company;
+
+        user.save().then(() => {
+                if (user.company && (user.company._id !== oldCompany._id)) {
+                        CompanySchema.findById(body.company._id, (err, company) => {
+                            company.recruiters.push({_id: user._id});
+                            company.save();
+                        });
+                        CompanySchema.findById(oldCompany._id, (err, company) => {
+                            company.recruiters.pull({_id: user._id});
+                            company.save();
+                        });
+                    }
+                return res.status(200).json({success: true, id: user._id, message: 'Recruiter updated!'})
+            })
+            .catch(error => {
+                return res.status(404).json({ error, message: 'Recruiter not updated!' })
+            });
+    });
+};
+
+getPotentialCandidates = (req, res) => {
+    const jobLabels = req.body.labels.map(label => { return label._id });
+    UserSchema.find({"user_type" : "CANDIDATE"}).populate('labels').exec((err, candidates) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        let potentialCandidates = candidates.map(candidate => {
+            const candidateLabels = jobLabels.filter(label => candidate.labels.map(label => {return label._id }).includes(label));
+            const candidateMatchPercent = (candidateLabels.length / jobLabels.length) * 100;
+            if (candidateMatchPercent > req.body.matchPercent) {
+                candidate = {candidate: candidate, matchPercent: Math.round(candidateMatchPercent)};
+                return candidate;
+            } else {
+                return null;
+            }
+        });
+        if (!potentialCandidates.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Candidate not found` })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: potentialCandidates.filter(candidate => candidate != null)
+        });
+    });
+};
+
 module.exports = {
   //  signUp,
     register,
@@ -179,6 +243,7 @@ module.exports = {
     updateUserById,
     getCandidates,
     getCandidateById,
+    getPotentialCandidates,
     getRecruiters,
     getRecruiterById,
     getUsers,

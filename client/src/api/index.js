@@ -14,6 +14,7 @@ export const getJobById = id => api.get(`/job/${id}`);
 export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
 export const getCandidateById = id => api.get(`/candidate/${id}`);
+export const getPotentialCandidates = payload => api.post('/candidate/potentials', payload);
 
 export const getRecruiterById = id => api.get(`/recruiter/${id}`);
 
@@ -50,6 +51,7 @@ const apis = {
 
     getCandidates,
     getCandidateById,
+    getPotentialCandidates,
 
     getRecruiterById,
 
