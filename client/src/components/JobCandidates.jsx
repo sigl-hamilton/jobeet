@@ -49,7 +49,7 @@ class JobCandidates extends Component {
                                             <Badge variant="light" style={{margin: '2px'}} key={label._id}>{label.name}</Badge>
                                         ))}
                                     </td>
-                                    <td> {data.matchPercent} </td>
+                                    <td> {data.matchPercent} %</td>
                                     <td>
                                         <Link
                                             key={ data.candidate._id }
