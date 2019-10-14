@@ -214,7 +214,7 @@ getPotentialCandidates = (req, res) => {
             const candidateLabels = jobLabels.filter(label => candidate.labels.map(label => {return label._id }).includes(label));
             const candidateMatchPercent = (candidateLabels.length / jobLabels.length) * 100;
             if (candidateMatchPercent > req.body.matchPercent) {
-                candidate = {candidate: candidate, matchPercent: candidateMatchPercent};
+                candidate = {candidate: candidate, matchPercent: Math.round(candidateMatchPercent)};
                 return candidate;
             } else {
                 return null;
