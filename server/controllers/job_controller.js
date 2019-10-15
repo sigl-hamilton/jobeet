@@ -93,10 +93,44 @@ getJobs = (req, res) => {
     });
 };
 
+getPossibleJobs = (req, res) => {
+    console.log(req.body);
+    const candidateLabels = req.body.labels.map(label => { return label._id });
+    Job.find().populate('labels').exec((err, jobs) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        let potentialJobs = jobs.map(job => {
+            const matchLabels = candidateLabels.filter(candidateLabel =>
+                job.labels.map(label => { return label._id }).includes(candidateLabel) );
+
+            const jobMatchPercent = (matchLabels.length / candidateLabels.length) * 100;
+
+            if (jobMatchPercent > 70) {
+                job = {job: job, matchPercent: Math.round(jobMatchPercent)};
+                return job;
+            } else {
+                return null;
+            }
+        });
+        if (!potentialJobs.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Job not found` })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: potentialJobs.filter(job => job != null)
+        });
+    });
+};
+
 module.exports = {
     createJob,
     updateJob,
     deleteJob,
     getJobs,
     getJobById,
+    getPossibleJobs
 }
