@@ -29,12 +29,12 @@ class Home extends Component {
                     </div>
                     <div className="col-6 mt-5">
                         <div className="col-12 mt-4">
-                            <Button variant="primary" block>
+                            <Button href="/signup" variant="primary" block>
                                 Sign up
                             </Button>
                         </div>
                         <div className="col-12 mt-3">
-                            <Button variant="outline-primary" block>
+                            <Button href="/login" variant="outline-primary" block>
                                 Log in
                             </Button>
                         </div>
