@@ -6,6 +6,7 @@ const candidateRoutes = require('./candidate');
 const recruiterRoutes = require('./recruiter');
 const labelRoutes = require('./label');
 const companyRoutes = require('./company');
+const chatRoutes = require('./chat');
 
 const UserCtrl = require('../controllers/user_controller');
 const router = express.Router();
@@ -36,6 +37,7 @@ router.use("/candidate", candidateRoutes);
 router.use("/recruiter", recruiterRoutes);
 router.use("/label", labelRoutes);
 router.use("/company", companyRoutes);
+router.use("/chat", chatRoutes);
 
 router.post('/register', UserCtrl.register);
 router.post('/login',  passport.authenticate('local', {session: true} ), UserCtrl.login);

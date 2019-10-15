@@ -23,5 +23,8 @@ import CompanyInsert from './CompanyInsert'
 import CompanyUpdate from './CompanyUpdate'
 import CompanyProfile from './CompanyProfile'
 
+import ChatPage from './ChatPage'
+
 export { JobsList, JobsInsert, JobsUpdate, JobInfo, SignUp, LogIn, CandidateList, CandidateUpdate, UserProfile, UserList,
-    RecruiterUpdate, LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile}
+    RecruiterUpdate, LabelList, LabelInsert, LabelUpdate, CompanyList, CompanyInsert, CompanyUpdate, CompanyProfile,
+    ChatPage}
