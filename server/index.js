@@ -35,35 +35,35 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
+app.use(cors({ credentials: true, origin: 'http://localhost:8000' }));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-    UserCtrl.getDeserializeUser(id, function(err, user) {
+passport.deserializeUser(function (id, done) {
+    UserCtrl.getDeserializeUser(id, function (err, user) {
         done(err, user);
     });
 });
 
 const LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy (
-    {usernameField: 'email'},
-    function(username, password, done) {
-        UserCtrl.getUserByEmail(username, function(err, user){
-            if(err) throw err;
-            if(!user) { return done(null, false, {message: 'Unknown User'}); }
-            UserSchema.comparePassword(password, user.password, function(err, isMatch){
-                if(err) throw err;
-                if(isMatch){
+passport.use(new LocalStrategy(
+    { usernameField: 'email' },
+    function (username, password, done) {
+        UserCtrl.getUserByEmail(username, function (err, user) {
+            if (err) throw err;
+            if (!user) { return done(null, false, { message: 'Unknown User' }); }
+            UserSchema.comparePassword(password, user.password, function (err, isMatch) {
+                if (err) throw err;
+                if (isMatch) {
                     return done(null, user);
                 } else {
-                    return done(null, false, {message: 'Invalid password'});
+                    return done(null, false, { message: 'Invalid password' });
                 }
             });
         });
@@ -74,12 +74,12 @@ app.use('/api', router);
 
 // Endpoint to get current user
 
-app.get('/user', function(req, res){
+app.get('/user', function (req, res) {
     res.send(req.user);
 });
 
 // Endpoint to logout
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
     req.logout();
     res.send(null)
 });

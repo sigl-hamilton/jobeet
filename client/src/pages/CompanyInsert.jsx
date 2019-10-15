@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import FileHandler from "../components/FileHandler";
 
 class CompanyInsert extends Component {
     constructor(props) {
@@ -24,12 +25,15 @@ class CompanyInsert extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const payload = {name: this.state.name, description:this.state.description, recruiters: [this.state.user]};
+        const payload = {name: this.state.name, description:this.state.description, logo:this.state.logo, recruiters: [this.state.user]};
         api.insertCompany(payload).then(res => {
             window.alert(`Company Created`);
             this.props.history.push('/company/list');
         })
     };
+
+    // Prend le nom du fichier via l'enfant
+    getLogoPath = (value) => this.setState({logo: '/uploaded/'+ value});
 
     render() {
         const { errors } = this.state;
@@ -60,17 +64,11 @@ class CompanyInsert extends Component {
                             />
                         </Form.Group>
                     </Form.Row>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="logo">
-                            <Form.Label>Logo</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Logo path"
-                                onChange={this.onChange}
-                                value={this.state.logo}
-                            />
-                        </Form.Group>
-                    </Form.Row>
+
+                    {/* Attention faut appuyer sur upload avant de submit!*/}
+                    <FileHandler onChangeHandler={this.getLogoPath}/>
+              
+
                     <Button variant="dark" onClick={this.onSubmit}>
                         Submit
                     </Button>

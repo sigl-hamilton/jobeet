@@ -21,7 +21,8 @@ class FileHandler extends Component {
         super(props);
         this.state = {
             selectedFile: null,
-            loaded: 0
+            loaded: 0,
+            path: ""
         }
 
     }
@@ -81,6 +82,9 @@ class FileHandler extends Component {
                 selectedFile: files,
                 loaded: 0
             })
+
+            //Donne le nom du fichier au parent
+            this.props.onChangeHandler(files[0].name);
         }
     }
     onClickHandler = () => {
@@ -88,7 +92,7 @@ class FileHandler extends Component {
         for (var x = 0; x < this.state.selectedFile.length; x++) {
             data.append('file', this.state.selectedFile[x])
         }
-        axios.post("http://localhost:8000/upload", data, {
+        api.uploadFile(data, {
             onUploadProgress: ProgressEvent => {
                 this.setState({
                     loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
@@ -105,21 +109,18 @@ class FileHandler extends Component {
 
     render() {
         return (
-            <div class="container">
-                <div class="row">
-                    <div class="offset-md-3 col-md-6">
-                        <div class="form-group files">
+            <div className="container">
+                <div className="row">
+                    <div className="offset-md-3 col-md-6">
+                        <div className="form-group files">
                             <label>Upload Your File </label>
-                            <input type="file" class="form-control" multiple onChange={this.onChangeHandler} />
+                            <input type="file" className="form-control" multiple onChange={this.onChangeHandler} />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <ToastContainer />
                             <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded, 2)}%</Progress>
-
                         </div>
-
-                        <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-
+                        <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
                     </div>
                 </div>
             </div>

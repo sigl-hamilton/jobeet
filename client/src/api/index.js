@@ -36,6 +36,9 @@ export const getCompanies = () => api.get(`/company/list`);
 export const updateCompanyById = (id, payload) => api.put(`/company/${id}`, payload);
 export const getCompanyById = id => api.get(`/company/${id}`);
 
+export const uploadFile = payload => api.post(`/upload`, payload);
+
+
 const apis = {
     insertJob,
     getAllJobs,
@@ -64,6 +67,8 @@ const apis = {
     getCompanies,
     updateCompanyById,
     getCompanyById,
+
+    uploadFile,
 };
 
 export default apis

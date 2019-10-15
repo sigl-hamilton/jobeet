@@ -11,6 +11,8 @@ const UserCtrl = require('../controllers/user_controller');
 const router = express.Router();
 const passport = require('passport');
 
+const fileHandler = require('./fileHandler')
+
 // middleware for doing role-based permissions
 
 function permit(...allowed) {
@@ -39,5 +41,7 @@ router.use("/company", companyRoutes);
 
 router.post('/register', UserCtrl.register);
 router.post('/login',  passport.authenticate('local', {session: true} ), UserCtrl.login);
+
+router.use("/upload", fileHandler);
 
 module.exports = router;
