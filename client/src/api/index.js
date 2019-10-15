@@ -10,6 +10,7 @@ export const getAllJobs = () => api.get(`/job/list`);
 export const updateJobById = (id, payload) => api.put(`/job/${id}`, payload);
 export const deleteJobById = id => api.delete(`/job/${id}`);
 export const getJobById = id => api.get(`/job/${id}`);
+export const getPossibleJobs = payload => api.post(`/job/possible`, payload);
 
 export const getProfilById = id => api.get(`/account/profil/${id}`);
 export const getCandidates = () => api.get(`/candidate/list`);
@@ -47,6 +48,7 @@ const apis = {
     updateJobById,
     deleteJobById,
     getJobById,
+    getPossibleJobs,
 
     getUsers,
     getUserById,

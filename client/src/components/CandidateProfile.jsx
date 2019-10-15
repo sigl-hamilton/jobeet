@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Avatar from 'react-avatar';
 import Badge from "react-bootstrap/Badge";
 import {Link} from "react-router-dom";
+import CandidateProfileBody from "./CandidateProfileBody";
 
 
 class CandidateProfile extends Component {
@@ -40,7 +41,7 @@ class CandidateProfile extends Component {
                         </div>
                     </Col>
                     <Col>
-                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
+                        <div  style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
                             <Link to={{
                                 pathname: '/candidate/update/'+ candidate._id,
                                 state: { user: candidate }
@@ -51,12 +52,17 @@ class CandidateProfile extends Component {
                     </Col>
                 </Row>
                 <Row style={{marginTop: '10px'}}>
-                    <Col lg={3} style={{background:'#aaa4a3', borderRadius: '10px'}}>
+                    <Col lg={3}>
                         <div style={{fontSize: '20px', textAlign: 'center', backgroundColor: '#fff8f6', margin: '10px'}}>
                             Skills
                         </div>
                         <div style={{margin: '10px'}}>
                             { candidate.labels.map( label => (<Badge variant="dark" style={{margin: '2px'}}>{label.name}</Badge>)) }
+                        </div>
+                    </Col>
+                    <Col  style={{ borderRadius: '10px'}}>
+                        <div style={{margin: '10px'}}>
+                            <CandidateProfileBody candidate={candidate}/>
                         </div>
                     </Col>
                 </Row>
