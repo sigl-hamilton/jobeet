@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { FileHandler } from "../components";
 
 class CandidateInsert extends Component {
     constructor(props) {
@@ -47,6 +48,11 @@ class CandidateInsert extends Component {
                         Submit
                     </Button>
                 </Form>
+
+                <br>
+                </br>
+
+                <FileHandler></FileHandler>
             </Container>
         );
     };
