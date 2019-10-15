@@ -28,7 +28,7 @@ class ChatPage extends Component {
         this.socket = io('localhost:3000');
 
         this.socket.on('RECEIVE_MESSAGE', (payload) => {
-            this.setState( {chat: payload, isLoading: false });
+            this.setState( {chat: payload, isLoading: false, message: ''});
         });
 
         this.sendMessage = e => {
