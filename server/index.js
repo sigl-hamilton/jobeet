@@ -11,6 +11,8 @@ const cors = require('cors');
 const app = express();
 const apiPort = 3000;
 
+const socket = require('socket.io');
+
 //Db connection
 const db = require('./db');
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -84,4 +86,14 @@ app.get('/logout', function(req, res){
     res.send(null)
 });
 
-app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
+server = app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
+
+io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(payload){
+        io.emit('RECEIVE_MESSAGE', payload);
+    })
+});

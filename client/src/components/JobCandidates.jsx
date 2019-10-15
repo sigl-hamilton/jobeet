@@ -59,6 +59,17 @@ class JobCandidates extends Component {
                                         > See profile
                                         </Link>
                                     </td>
+                                    <td>
+                                        <Link
+                                            to={{
+                                                pathname: '/user/chat/'+ data.candidate._id + '/' + this.state.job.author._id,
+                                                state: { job: this.state.job }
+                                            }}
+                                            className="btn btn-light" variant="light"
+                                            style={{marginBottom: '10px'}}
+                                        > Start chatting
+                                        </Link>
+                                    </td>
                                 </tr>
                             )
                         }) }

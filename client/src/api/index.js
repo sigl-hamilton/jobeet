@@ -36,6 +36,11 @@ export const getCompanies = () => api.get(`/company/list`);
 export const updateCompanyById = (id, payload) => api.put(`/company/${id}`, payload);
 export const getCompanyById = id => api.get(`/company/${id}`);
 
+export const insertChat = payload => api.post(`/chat`, payload);
+export const getChatById = id => api.get(`/chat/${id}`);
+export const getChatByJob = payload => api.post(`/chat/job`, payload);
+export const addMessage = (id, payload) => api.put(`/chat/${id}`, payload);
+
 const apis = {
     insertJob,
     getAllJobs,
@@ -64,6 +69,12 @@ const apis = {
     getCompanies,
     updateCompanyById,
     getCompanyById,
+
+    insertChat,
+    getChatById,
+    getChatByJob,
+    addMessage,
+
 };
 
 export default apis
