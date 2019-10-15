@@ -73,16 +73,22 @@ getChatById = async (req, res) => {
 };
 
 getChatByJob = async (req, res) => {
-    const body = req.body;
-    await ChatSchema.findOne({ job: body.job, userFrom: body.userFrom, userTo: body.userTo })
+    const job = req.body.job;
+    const userFrom = req.body.userFrom;
+    const userTo = req.body.userTo;
+
+    await ChatSchema.findOne({ job: job, userFrom: userFrom, userTo: userTo })
         .populate('messages').exec((err, chat) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }
         if (!chat) {
+            ChatSchema.findOne({ job: job, userFrom: userTo, userTo: userFrom })
+                .populate('messages').exec((err, chat) => {
+                return res.status(200).json({ success: true, data: chat });
+            });
             return res.status(404).json({ success: false, error: `Chat not found` });
         }
-
         return res.status(200).json({ success: true, data: chat });
     })
 };
