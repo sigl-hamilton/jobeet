@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
+import Home from "../pages/Home";
 
 library.add(fab, faPen);
 
@@ -46,6 +47,7 @@ class App extends Component {
             <Router>
                 <NavBar currentUser={this.state.currentUser} refreshUser={this.refreshUser}/>
                 <Switch>
+                    <Route path="/" exact component={Home} />
                     <Route path="/signup" exact component={SignUp} />
                     <Route path="/login" exact render={(props) => <LogIn {...props} refreshUser={this.refreshUser} />}/>
                     <Route path="/jobs/list" exact component={JobsList} />
