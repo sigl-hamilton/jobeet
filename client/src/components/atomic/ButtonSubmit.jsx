@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 // Generic component made to create a simple button
-class ButtonNormal extends Component {
+class ButtonSubmit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,4 +35,4 @@ class ButtonNormal extends Component {
     }
 }
 
-export default ButtonNormal
+export default ButtonSubmit
