@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import GenericLabeledInput from "./GenericLabeledInput";
 
+// A component to make a labeled password input
 class LabeledInputPassword12 extends Component {
     constructor(props) {
         super(props);

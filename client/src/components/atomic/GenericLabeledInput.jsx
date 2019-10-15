@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+// Generic component made to create a labeled input (for example, a first name input or a password input)
+// LabeledInputNormal12, LabeledInputEmail12 and LabeledInputPassword12 are based on it
 class GenericLabeledInput extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class GenericLabeledInput extends Component {
         let type = this.props.type ? this.props.type : null;
         let label = this.props.label ? this.props.label : "";
         return (
-            <div className="input-field">
+            <div className={"input-field col s" + cols.toString()}>
                 <input
                     onChange={onChange}
                     value={value}
