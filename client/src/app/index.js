@@ -1,6 +1,7 @@
-
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import api from '../api';
 
 import { NavBar } from '../components'
 import { UserProfile, SignUp, LogIn, UserList } from '../pages'
@@ -19,13 +20,34 @@ import { faPen } from '@fortawesome/free-solid-svg-icons'
 library.add(fab, faPen);
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: null,
+        }
+    }
+
+    refreshUser = (currentUser) => {
+        this.setState({
+            currentUser
+        });
+    }
+
+    componentDidMount = async () => {
+        await api.getCurrentUser().then(currentUser => {
+            this.setState({
+                currentUser: currentUser.data.data
+            });
+        });
+    }
+
     render() {
         return (
             <Router>
-                <NavBar />
+                <NavBar currentUser={this.state.currentUser}/>
                 <Switch>
                     <Route path="/signup" exact component={SignUp} />
-                    <Route path="/login" exact component={LogIn} />
+                    <Route path="/login" exact render={(props) => <LogIn {...props} refreshUser={this.refreshUser} />}/>
                     <Route path="/jobs/list" exact component={JobsList} />
                     <Route path="/jobs/create" exact component={JobsInsert} />
                     <Route path="/job/update/:id" exact component={JobsUpdate} />

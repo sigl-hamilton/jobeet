@@ -12,11 +12,17 @@ const Item = styled.div.attrs({
 })``
 
 class Links extends Component {
-
+    constructor(props) {
+        super(props);
+    }
 
     render() {
+        const currentUser = this.props.currentUser;
+
         return (
         <List>
+        {
+            !currentUser ?
             <Item>
                 <Link to="/signup" className="nav-link">
                     Sign Up
@@ -24,37 +30,31 @@ class Links extends Component {
                 <Link to="/login" className="nav-link">
                     Log In
                 </Link>
-            </Item>
+            </Item> : null
+        }
+        {
+            currentUser ?
             <Item>
                 <Link to="/jobs/list" className="nav-link">
                     Jobs
                 </Link>
-            </Item>
-            <Item>
                 <Link to="/user/list" className="nav-link">
                     User list
                 </Link>
-            </Item>
-            <Item>
                 <Link to="/candidate/list" className="nav-link">
                     Candidate List
                 </Link>
-            </Item>
-            <Item>
                 <Link to="/label/create" className="nav-link">
                     Label Create
                 </Link>
-            </Item>
-            <Item>
                 <Link to="/label/list" className="nav-link">
                     Label List
                 </Link>
-            </Item>
-            <Item>
                 <Link to="/company/list" className="nav-link">
                     Company List
                 </Link>
-            </Item>
+            </Item> : null
+        }
         </List>
         )
     }

@@ -14,14 +14,15 @@ class LogIn extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
-    onSubmit = e => {
+    onSubmit = async e => {
         e.preventDefault();
         const userData = {
             email: this.state.email,
             password: this.state.password
         };
-        api.login(userData).then(res => {
+        await api.login(userData).then(res => {
             window.alert(`User logged`);
+            this.props.refreshUser(res.data.data);
         });
     };
 

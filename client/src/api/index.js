@@ -23,9 +23,8 @@ export const getUsers = () => api.get(`/user/list`);
 export const getUserById = id => api.get(`/user/${id}`);
 export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const register = newUser => api.post(`/register`, newUser);
-export const login = newUser => api.post(`/login`, newUser).then(response => {
-    console.log(response.data);
-});
+export const login = newUser => api.post(`/login`, newUser);
+export const getCurrentUser = () => api.get('/user/current');
 
 export const insertLabel = payload => api.post(`/label`, payload);
 export const getLabels = () => api.get(`/label/list`);
@@ -55,6 +54,7 @@ const apis = {
     updateUserById,
     register,
     login,
+    getCurrentUser,
 
     getCandidates,
     getCandidateById,
