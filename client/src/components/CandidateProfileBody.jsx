@@ -38,8 +38,6 @@ class CandidateProfileBody extends Component {
                         {this.state.possibleJobs ? this.state.possibleJobs.map(job => {return <CandidateJobCard job={job} candidate={this.props.candidate} />}) : 'No jobs for the moment'}
                     </div>
                 </Tab>
-                <Tab eventKey="test" title="test">
-                </Tab>
             </Tabs>
         )
     }
