@@ -29,11 +29,16 @@ register = (req, res) => {
 
 login = (req, res) => {
     console.log("LOGIN");
-    res.send(req.user);
+    return res.status(200).json({ success: true, data: req.user });
+}
+
+logout = (req, res) => {
+    req.logout();
+    return res.status(200).json({ success: true })
 }
 
 getCurrentUser = (req, res) => {
-    res.send(req.user);
+    return res.status(200).json({ success: true, data: req.user });
 }
 
 getUserByEmail = (email, callback) => {
@@ -237,8 +242,10 @@ module.exports = {
   //  signUp,
     register,
     login,
+    logout,
     getDeserializeUser,
     getUserByEmail,
+    getCurrentUser,
     getUserById,
     updateUserById,
     getCandidates,
