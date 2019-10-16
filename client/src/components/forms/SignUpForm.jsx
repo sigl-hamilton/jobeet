@@ -63,7 +63,7 @@ class SignUpForm extends Component {
                             : null
                         }
                     </div>
-                    <form noValidate onSubmit={this.onSubmit}>
+                    <form noValidate onSubmit={this.onSubmit} className="mt-3">
                         <LabeledInputNormal12 className="mt-3"
                             onChange={this.onChange}
                             value={this.state.lastname}
@@ -99,8 +99,8 @@ class SignUpForm extends Component {
                             id="password2"
                             label="Confirm password"
                         />
-                        <div className="input-field col s12">
-                            <Form.Group as={Col} md="4" controlId="user_type">
+                        <div className="input-field col-12 mt-3">
+                            <Form.Group controlId="user_type">
                                 <label htmlFor="user_type">Type of user</label>
                                 <Form.Control as="select" onChange={this.onChange}>
                                     <option value="CANDIDATE">Candidate</option>
@@ -109,11 +109,9 @@ class SignUpForm extends Component {
                             </Form.Group>
 
                         </div>
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <Button variant="primary" type="submit" onClick={this.registerUser}>
-                                Sign up
-                            </Button>
-                        </div>
+                        <Button className="mt-3 ml-3" variant="primary" type="submit" onClick={this.registerUser}>
+                            Sign up
+                        </Button>
                     </form>
                 </div>
             </div>

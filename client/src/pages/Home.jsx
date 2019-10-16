@@ -31,11 +31,11 @@ class Home extends Component {
                     </div>
                     <div className="col-6 mt-5">
                         <Row>
-                            <div className="col-6 mt-2">
-                                <SignUpForm />
-                            </div>
                             <div className="col-6 mt-3">
                                 <LogInForm />
+                            </div>
+                            <div className="col-6 mt-3">
+                                <SignUpForm />
                             </div>
                         </Row>
                     </div>

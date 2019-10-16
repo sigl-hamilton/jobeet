@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 // Generic component made to create a labeled input (for example, a first name input or a password input)
 // LabeledInputNormal12, LabeledInputEmail12 and LabeledInputPassword12 are based on it
@@ -18,17 +20,11 @@ class GenericLabeledInput extends Component {
         let type = this.props.type ? this.props.type : null;
         let label = this.props.label ? this.props.label : "";
         return (
-            <div className="ml-3 mr-3">
-                <div className={"input-field row " + this.props.className}>
-                    <label className="ml-2 col-12" htmlFor={id}>{label}</label>
-                    <input className="col-12"
-                           onChange={onChange}
-                           value={value}
-                           error={error}
-                           id={id}
-                           type={type}
-                    />
-                </div>
+            <div>
+                <Form.Group as={Col} controlId={id}>
+                    <Form.Label className="ml-2">{label}</Form.Label>
+                    <Form.Control type={type} value={value} onChange={onChange} placeholder="Password" />
+                </Form.Group>
             </div>
         )
     }

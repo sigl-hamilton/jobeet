@@ -46,7 +46,7 @@ class LogInForm extends Component {
                             : null
                         }
                     </div>
-                    <form noValidate onSubmit={this.onSubmit}>
+                    <form noValidate onSubmit={this.onSubmit} className="mt-3">
                         <LabeledInputEmail12 className="mt-3"
                              onChange={this.onChange}
                              value={this.state.email}
@@ -61,11 +61,9 @@ class LogInForm extends Component {
                             id="password"
                             label="Password"
                         />
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <Button variant="outline-primary" type="submit" onClick={this.onSubmit}>
-                                Login
-                            </Button>
-                        </div>
+                        <Button className="mt-4 ml-3" variant="outline-primary" type="submit" onClick={this.onSubmit}>
+                            Login
+                        </Button>
                     </form>
                 </div>
             </div>
