@@ -94,9 +94,8 @@ getJobs = (req, res) => {
 };
 
 getPossibleJobs = (req, res) => {
-    console.log(req.body);
     const candidateLabels = req.body.labels.map(label => { return label._id });
-    Job.find().populate('labels').exec((err, jobs) => {
+    Job.find().populate('labels').populate('author').exec((err, jobs) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

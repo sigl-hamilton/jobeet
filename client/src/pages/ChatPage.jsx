@@ -23,8 +23,8 @@ class ChatPage extends Component {
             chat: null,
             isLoading: true,
             message: '',
-            messages: []
         };
+
         this.socket = io('localhost:3000');
 
         this.socket.on('RECEIVE_MESSAGE', (payload) => {
@@ -60,7 +60,7 @@ class ChatPage extends Component {
 
         const payload = { job: this.state.job, userFrom: this.state.userFrom, userTo: this.state.userTo };
         await api.getChatByJob(payload).then( chat => {
-            this.setState({ chat : chat.data.data, messages: chat.data.data.messages });
+            this.setState({ chat : chat.data.data });
         }).catch(error => {});
 
         if (!this.state.chat) {
@@ -75,19 +75,25 @@ class ChatPage extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
-
+    ChatLine = () => {}
 
     render() {
         if (this.state.isLoading) {
             return (<Container/>)
         }
         const discussion = this.state.chat ?
-            this.state.chat.messages.map(mes => { return <div><Badge>{mes.message}</Badge></div> })
+            this.state.chat.messages.map(mes => {
+                if (this.state.userFrom._id === mes.user) {
+                    return <div style={{textAlign:'right'}}><Badge variant="dark">{mes.message}</Badge></div>
+                } else {
+                    return <div style={{textAlign:'left'}}><Badge variant="light">{mes.message}</Badge></div>
+                }
+            })
             : '';
 
         return (
             <Container>
-                <h1>Chatting with UserTO</h1>
+                <h1>Chatting with {this.state.userTo.firstname}</h1>
                 <Row style={{height: '280px'}}>
                 </Row>
                     {discussion}

@@ -76,21 +76,20 @@ getChatByJob = async (req, res) => {
     const job = req.body.job;
     const userFrom = req.body.userFrom;
     const userTo = req.body.userTo;
-
-    await ChatSchema.findOne({ job: job, userFrom: userFrom, userTo: userTo })
-        .populate('messages').exec((err, chat) => {
+    await ChatSchema.findOne({
+        $and : [
+            {$or: [ { userFrom: userFrom, userTo: userTo }, { userFrom: userTo, userTo: userFrom } ]},
+            {job: job}
+            ]
+    }).populate('messages').exec((err, chat) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }
-        if (!chat) {
-            ChatSchema.findOne({ job: job, userFrom: userTo, userTo: userFrom })
-                .populate('messages').exec((err, chat) => {
-                return res.status(200).json({ success: true, data: chat });
-            });
-            return res.status(404).json({ success: false, error: `Chat not found` });
+        if (chat) {
+            return res.status(200).json({ success: true, data: chat });
         }
-        return res.status(200).json({ success: true, data: chat });
-    })
+        return res.status(400).json({ success: false, error: 'Chat Not Found' });
+    });
 };
 
 module.exports = {
