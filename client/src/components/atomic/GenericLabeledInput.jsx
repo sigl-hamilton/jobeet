@@ -11,7 +11,6 @@ class GenericLabeledInput extends Component {
     }
 
     render() {
-        let cols = this.props.cols ? this.props.cols : "12";
         let onChange = this.props.onChange ? this.props.onChange : null;
         let value = this.props.value ? this.props.value : "";
         let error = this.props.error ? this.props.error : "";
@@ -19,15 +18,15 @@ class GenericLabeledInput extends Component {
         let type = this.props.type ? this.props.type : null;
         let label = this.props.label ? this.props.label : "";
         return (
-            <div className={"input-field col s" + cols.toString()}>
-                <input
+            <div className="input-field row">
+                <label className="ml-2 col-12" htmlFor={id}>{label}</label>
+                <input className="col-12"
                     onChange={onChange}
                     value={value}
                     error={error}
                     id={id}
                     type={type}
                 />
-                <label className="ml-2" htmlFor={id}>{label}</label>
             </div>
         )
     }
