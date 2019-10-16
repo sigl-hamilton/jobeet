@@ -18,6 +18,9 @@ class CandidateProfile extends Component {
 
     render() {
         const candidate = this.props.user;
+        const currentUser = this.props.currentUser;
+        console.log("RTYUI" + currentUser)
+
         let job_status;
         if (candidate.job_status === 'ACTIVE') {
             job_status = <Badge variant="dark">Actively looking for a job</Badge>;
@@ -41,6 +44,8 @@ class CandidateProfile extends Component {
                         </div>
                     </Col>
                     <Col>
+                    {
+                        currentUser && currentUser._id === candidate._id ?
                         <div  style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
                             <Link to={{
                                 pathname: '/candidate/update/'+ candidate._id,
@@ -48,7 +53,8 @@ class CandidateProfile extends Component {
                             }}
                                   className="btn btn-dark" variant="dark"
                             > Update your profile </Link>
-                        </div>
+                        </div> : null
+                    }
                     </Col>
                 </Row>
                 <Row style={{marginTop: '10px'}}>
@@ -62,7 +68,7 @@ class CandidateProfile extends Component {
                     </Col>
                     <Col  style={{ borderRadius: '10px'}}>
                         <div style={{margin: '10px'}}>
-                            <CandidateProfileBody candidate={candidate}/>
+                            <CandidateProfileBody candidate={candidate} currentUser={currentUser}/>
                         </div>
                     </Col>
                 </Row>

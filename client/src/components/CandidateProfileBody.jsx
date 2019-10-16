@@ -18,11 +18,14 @@ class CandidateProfileBody extends Component {
         };
     }
 
-    componentDidMount = async () => {
-        const payload = { labels: this.state.candidate.labels, matchPercent: 75 };
-        await api.getPossibleJobs(payload).then( possibleJob => {
-            this.setState({ possibleJobs: possibleJob.data.data, isLoading: false });
-        });
+    componentWillReceiveProps = async (newProps) => {
+        const currentUser = newProps.currentUser;
+        if (currentUser && currentUser._id === this.state.candidate._id) {
+            const payload = { labels: this.state.candidate.labels, matchPercent: 75 };
+            await api.getPossibleJobs(payload).then( possibleJob => {
+                this.setState({ possibleJobs: possibleJob.data.data, isLoading: false });
+            });
+        }
     };
 
     render() {

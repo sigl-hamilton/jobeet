@@ -33,8 +33,8 @@ router.use("/account",  permit("CANDIDATE", "RECRUITER", "ADMIN"), accountRoutes
 router.use("/user", permit("CANDIDATE", "RECRUITER", "ADMIN"), userRoutes);
 router.use("/candidate",  permit("CANDIDATE", "RECRUITER", "ADMIN"), candidateRoutes);
 router.use("/recruiter", permit("RECRUITER", "ADMIN"), recruiterRoutes);
-router.use("/label", permit("RECRUITER", "ADMIN"), labelRoutes);
-router.use("/company", permit("RECRUITER", "ADMIN"), companyRoutes);
+router.use("/label", permit("CANDIDATE","RECRUITER", "ADMIN"), labelRoutes);
+router.use("/company", permit("CANDIDATE", "RECRUITER", "ADMIN"), companyRoutes);
 router.use("/chat", permit("CANDIDATE", "RECRUITER", "ADMIN"), chatRoutes);
 
 router.post('/register', permit("NOT_LOGGED"), UserCtrl.register);
