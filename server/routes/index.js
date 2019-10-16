@@ -15,31 +15,30 @@ const passport = require('passport');
 // middleware for doing role-based permissions
 
 function permit(...allowed) {
-  /*
   const isAllowed = role => allowed.indexOf(role) > -1;
 
   // return a middleware
   return (request, response, next) => {
-    if (request.user && isAllowed(request.user.user_type))
-      next(); // role is allowed, so continue on the next middleware
-    else {
-      response.status(403).json({message: "Forbidden"}); // user is forbidden
+        user_type = request.user ? request.user.user_type : "NOT_LOGGED";
+        if (isAllowed(user_type))
+            next(); // role is allowed, so continue on the next middleware
+        else {
+            response.status(403).json({message: "Forbidden"}); // user is forbidden
     }
   }
-
-   */
 }
 // permit("CANDIDATE", "RECRUITER")
-router.use("/job", jobRoutes);
-router.use("/account", accountRoutes);
-router.use("/user", userRoutes);
-router.use("/candidate", candidateRoutes);
-router.use("/recruiter", recruiterRoutes);
-router.use("/label", labelRoutes);
-router.use("/company", companyRoutes);
-router.use("/chat", chatRoutes);
+router.use("/job",  permit("CANDIDATE", "RECRUITER", "OWNER"), jobRoutes);
+router.use("/account",  permit("CANDIDATE", "RECRUITER", "OWNER"), accountRoutes);
+router.use("/user", permit("CANDIDATE", "RECRUITER", "OWNER"), userRoutes);
+router.use("/candidate",  permit("CANDIDATE", "RECRUITER", "OWNER"), candidateRoutes);
+router.use("/recruiter", permit("RECRUITER", "OWNER"), recruiterRoutes);
+router.use("/label", permit("RECRUITER", "OWNER"), labelRoutes);
+router.use("/company", permit("RECRUITER", "OWNER"), companyRoutes);
+router.use("/chat", permit("CANDIDATE", "RECRUITER", "OWNER"), chatRoutes);
 
-router.post('/register', UserCtrl.register);
-router.post('/login',  passport.authenticate('local', {session: true} ), UserCtrl.login);
+router.post('/register', permit("NOT_LOGGED"), UserCtrl.register);
+router.post('/login', permit("NOT_LOGGED"), passport.authenticate('local', {session: true} ), UserCtrl.login);
+router.get('/logout', permit("CANDIDATE", "RECRUITER", "OWNER"), UserCtrl.logout);
 
 module.exports = router;
