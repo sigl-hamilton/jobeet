@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../../api";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import {Button} from "react-bootstrap";
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -121,19 +122,9 @@ class SignUpForm extends Component {
 
                         </div>
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                onClick={this.registerUser}
-                            >
+                            <Button variant="primary" type="submit" onClick={this.registerUser}>
                                 Sign up
-                            </button>
+                            </Button>
                         </div>
                     </form>
                 </div>

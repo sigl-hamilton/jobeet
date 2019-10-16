@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../api";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import {Button, Row} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import SignUpForm from "../components/forms/SignUpForm";
 import LogInForm from "../components/forms/LogInForm";
 

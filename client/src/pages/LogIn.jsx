@@ -35,5 +35,5 @@ class LogIn extends Component {
             </div>
         );
     };
-};
+}
 export default LogIn;

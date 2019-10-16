@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
+import {Button} from "react-bootstrap";
 
 class LogInForm extends Component {
     constructor() {
@@ -64,18 +65,9 @@ class LogInForm extends Component {
                             <label htmlFor="password">Password</label>
                         </div>
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                            >
+                            <Button variant="outline-primary" type="submit" onClick={this.onSubmit}>
                                 Login
-                            </button>
+                            </Button>
                         </div>
                     </form>
                 </div>
