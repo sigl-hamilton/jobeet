@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import api from '../api';
 
 
 const List = styled.div.attrs({
@@ -14,6 +15,13 @@ const Item = styled.div.attrs({
 class Links extends Component {
     constructor(props) {
         super(props);
+    }
+
+    logout = async () => {
+        await api.logout().then(res => {
+            window.alert(`User logged`);
+            this.props.refreshUser(null);
+        });
     }
 
     render() {
@@ -35,24 +43,32 @@ class Links extends Component {
         {
             currentUser ?
             <Item>
+                <Link to="/" className="nav-link">
+                    <span onClick={this.logout}>Log Out</span>
+                </Link>
                 <Link to="/jobs/list" className="nav-link">
                     Jobs
                 </Link>
-                <Link to="/user/list" className="nav-link">
-                    User list
-                </Link>
-                <Link to="/candidate/list" className="nav-link">
-                    Candidate List
-                </Link>
-                <Link to="/label/create" className="nav-link">
-                    Label Create
-                </Link>
-                <Link to="/label/list" className="nav-link">
-                    Label List
-                </Link>
-                <Link to="/company/list" className="nav-link">
-                    Company List
-                </Link>
+                {
+                    currentUser.user_type != "CANDIDATE" ?
+                    <Item>
+                        <Link to="/user/list" className="nav-link">
+                            User list
+                        </Link>
+                        <Link to="/candidate/list" className="nav-link">
+                            Candidate List
+                        </Link>
+                        <Link to="/label/create" className="nav-link">
+                            Label Create
+                        </Link>
+                        <Link to="/label/list" className="nav-link">
+                            Label List
+                        </Link>
+                        <Link to="/company/list" className="nav-link">
+                            Company List
+                        </Link>
+                    </Item>: null
+                }
             </Item> : null
         }
         </List>

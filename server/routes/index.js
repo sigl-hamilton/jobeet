@@ -40,6 +40,7 @@ router.use("/company", companyRoutes);
 router.use("/chat", chatRoutes);
 
 router.post('/register', UserCtrl.register);
-router.post('/login',  passport.authenticate('local', {session: true} ), UserCtrl.login);
+router.post('/login', passport.authenticate('local', {session: true} ), UserCtrl.login);
+router.get('/logout', UserCtrl.logout);
 
 module.exports = router;

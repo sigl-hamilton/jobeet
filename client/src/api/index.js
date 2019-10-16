@@ -24,6 +24,7 @@ export const getUserById = id => api.get(`/user/${id}`);
 export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const register = newUser => api.post(`/register`, newUser);
 export const login = newUser => api.post(`/login`, newUser);
+export const logout = () => api.get(`/logout`);
 export const getCurrentUser = () => api.get('/user/current');
 
 export const insertLabel = payload => api.post(`/label`, payload);
@@ -54,6 +55,7 @@ const apis = {
     updateUserById,
     register,
     login,
+    logout,
     getCurrentUser,
 
     getCandidates,

@@ -32,6 +32,11 @@ login = (req, res) => {
     return res.status(200).json({ success: true, data: req.user });
 }
 
+logout = (req, res) => {
+    req.logout();
+    return res.status(200).json({ success: true })
+}
+
 getCurrentUser = (req, res) => {
     return res.status(200).json({ success: true, data: req.user });
 }
@@ -237,6 +242,7 @@ module.exports = {
   //  signUp,
     register,
     login,
+    logout,
     getDeserializeUser,
     getUserByEmail,
     getCurrentUser,

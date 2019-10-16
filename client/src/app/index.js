@@ -44,7 +44,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <NavBar currentUser={this.state.currentUser}/>
+                <NavBar currentUser={this.state.currentUser} refreshUser={this.refreshUser}/>
                 <Switch>
                     <Route path="/signup" exact component={SignUp} />
                     <Route path="/login" exact render={(props) => <LogIn {...props} refreshUser={this.refreshUser} />}/>
