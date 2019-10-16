@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
 import api from "../api";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import SignUpForm from "../components/forms/SignUpForm";
 
 class SignUp extends Component {

@@ -14,7 +14,7 @@ class LabeledInputNormal12 extends Component {
         let id = this.props.id;
         let label = this.props.label ? this.props.label : "";
         return (
-            <GenericLabeledInput
+            <GenericLabeledInput className={this.props.className}
                 cols="12"
                 onChange={onChange}
                 value={value}

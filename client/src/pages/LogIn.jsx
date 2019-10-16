@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import api from "../api";
 import LogInForm from "../components/forms/LogInForm";
 

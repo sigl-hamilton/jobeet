@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
 import {Button} from "react-bootstrap";
+import LabeledInputNormal12 from "../atomic/LabeledInputNormal12";
+import LabeledInputEmail12 from "../atomic/LabeledInputEmail12";
+import LabeledInputPassword12 from "../atomic/LabeledInputPassword12";
 
 class LogInForm extends Component {
     constructor() {
@@ -44,26 +47,20 @@ class LogInForm extends Component {
                         }
                     </div>
                     <form noValidate onSubmit={this.onSubmit}>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.email}
-                                error={errors.email}
-                                id="email"
-                                type="email"
-                            />
-                            <label htmlFor="email">Email</label>
-                        </div>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.password}
-                                error={errors.password}
-                                id="password"
-                                type="password"
-                            />
-                            <label htmlFor="password">Password</label>
-                        </div>
+                        <LabeledInputEmail12 className="mt-3"
+                             onChange={this.onChange}
+                             value={this.state.email}
+                             error={errors.email}
+                             id="email"
+                             label="Email"
+                        />
+                        <LabeledInputPassword12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.password}
+                            error={errors.password}
+                            id="password"
+                            label="Password"
+                        />
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <Button variant="outline-primary" type="submit" onClick={this.onSubmit}>
                                 Login

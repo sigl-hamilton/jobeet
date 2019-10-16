@@ -18,15 +18,17 @@ class GenericLabeledInput extends Component {
         let type = this.props.type ? this.props.type : null;
         let label = this.props.label ? this.props.label : "";
         return (
-            <div className="input-field row">
-                <label className="ml-2 col-12" htmlFor={id}>{label}</label>
-                <input className="col-12"
-                    onChange={onChange}
-                    value={value}
-                    error={error}
-                    id={id}
-                    type={type}
-                />
+            <div className="ml-3 mr-3">
+                <div className={"input-field row " + this.props.className}>
+                    <label className="ml-2 col-12" htmlFor={id}>{label}</label>
+                    <input className="col-12"
+                           onChange={onChange}
+                           value={value}
+                           error={error}
+                           id={id}
+                           type={type}
+                    />
+                </div>
             </div>
         )
     }

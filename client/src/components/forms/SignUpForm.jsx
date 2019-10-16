@@ -4,6 +4,9 @@ import api from "../../api";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import {Button} from "react-bootstrap";
+import LabeledInputNormal12 from "../atomic/LabeledInputNormal12";
+import LabeledInputEmail12 from "../atomic/LabeledInputEmail12";
+import LabeledInputPassword12 from "../atomic/LabeledInputPassword12";
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -61,56 +64,41 @@ class SignUpForm extends Component {
                         }
                     </div>
                     <form noValidate onSubmit={this.onSubmit}>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.lastname}
-                                error={errors.lastname}
-                                id="lastname"
-                                type="text"
-                            />
-                            <label htmlFor="name">Lastname</label>
-                        </div>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.firstname}
-                                error={errors.firstname}
-                                id="firstname"
-                                type="text"
-                            />
-                            <label htmlFor="name">Firstname</label>
-                        </div>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.email}
-                                error={errors.email}
-                                id="email"
-                                type="email"
-                            />
-                            <label htmlFor="email">Email</label>
-                        </div>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.password}
-                                error={errors.password}
-                                id="password"
-                                type="password"
-                            />
-                            <label htmlFor="password">Password</label>
-                        </div>
-                        <div className="input-field col s12">
-                            <input
-                                onChange={this.onChange}
-                                value={this.state.password2}
-                                error={errors.password2}
-                                id="password2"
-                                type="password"
-                            />
-                            <label htmlFor="password2">Confirm Password</label>
-                        </div>
+                        <LabeledInputNormal12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.lastname}
+                            error={errors.lastname}
+                            id="lastname"
+                            label="Lastname"
+                        />
+                        <LabeledInputNormal12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.firstname}
+                            error={errors.firstname}
+                            id="firstname"
+                            label="Firstname"
+                        />
+                        <LabeledInputEmail12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.email}
+                            error={errors.email}
+                            id="email"
+                            label="Email"
+                        />
+                        <LabeledInputPassword12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.password}
+                            error={errors.password}
+                            id="password"
+                            label="Password"
+                        />
+                        <LabeledInputPassword12 className="mt-3"
+                            onChange={this.onChange}
+                            value={this.state.password2}
+                            error={errors.password2}
+                            id="password2"
+                            label="Confirm password"
+                        />
                         <div className="input-field col s12">
                             <Form.Group as={Col} md="4" controlId="user_type">
                                 <label htmlFor="user_type">Type of user</label>
