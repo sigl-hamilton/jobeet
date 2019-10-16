@@ -50,7 +50,7 @@ class Links extends Component {
                     Jobs
                 </Link>
                 {
-                    currentUser.user_type != "CANDIDATE" ?
+                    currentUser.user_type != "CANDIDATE" || "ADMIN" ?
                     <Item>
                         <Link to="/user/list" className="nav-link">
                             User list
