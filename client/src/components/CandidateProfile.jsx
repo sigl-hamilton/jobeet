@@ -19,7 +19,6 @@ class CandidateProfile extends Component {
     render() {
         const candidate = this.props.user;
         const currentUser = this.props.currentUser;
-        console.log("RTYUI" + currentUser)
 
         let job_status;
         if (candidate.job_status === 'ACTIVE') {
