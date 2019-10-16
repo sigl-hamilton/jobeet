@@ -45,7 +45,9 @@ class NavBar extends Component {
                         <Form inline>
                             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                             <Button variant="outline-success">Search</Button>
-                            <Link>{currentUser.firstname}</Link>
+                            <Link to={{ pathname: '/user/' +currentUser._id, state: { user_type: currentUser.user_type }}}>
+                                {currentUser.firstname}
+                            </Link>
                         </Form>
                         : null
                     }
