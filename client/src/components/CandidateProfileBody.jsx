@@ -32,7 +32,7 @@ class CandidateProfileBody extends Component {
                 <Tab eventKey="jobs" title="Job">
                     <h4>Jobs that can match with your profile</h4>
                     <div style={{paddingTop: '10px'}}>
-                        {this.state.possibleJobs ? this.state.possibleJobs.map(job => {return <CandidateJobCard job={job} />}) : 'No jobs for the moment'}
+                        {this.state.possibleJobs ? this.state.possibleJobs.map(job => {return <CandidateJobCard job={job} candidate={this.props.candidate} />}) : 'No jobs for the moment'}
                     </div>
                 </Tab>
                 <Tab eventKey="test" title="test">
