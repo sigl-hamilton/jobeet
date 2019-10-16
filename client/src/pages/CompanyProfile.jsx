@@ -61,16 +61,6 @@ class CompanyProfile extends Component {
                             {company.description}
                         </div>
                     </Col>
-                    <Col>
-                        <div style={{background:'#fff8f6', borderRadius: '10px', margin:"20px", padding:"10px"}}>
-                            <Link to={{
-                                pathname: '/company/update/'+ company._id,
-                                state: { user: company }
-                            }}
-                                  className="btn btn-dark" variant="dark"
-                            > Update your company </Link>
-                        </div>
-                    </Col>
                 </Row>
                 <Row style={{marginTop: '10px'}}>
                     <Col lg={3} style={{background:'#aaa4a3', borderRadius: '10px'}}>

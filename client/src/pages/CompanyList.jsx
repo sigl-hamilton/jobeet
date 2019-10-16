@@ -39,11 +39,6 @@ class CompanyList extends Component {
         return (
             <Container>
                 <h1>List of companies</h1>
-                <div style={{paddingBottom: '10px'}}>
-                    <Link to={{ pathname: '/company/create'}} className="btn btn-dark" variant="dark">
-                        Add a new Company
-                    </Link>
-                </div>
                 <div>
                     <CardColumns>
                         {companies.map(company => {

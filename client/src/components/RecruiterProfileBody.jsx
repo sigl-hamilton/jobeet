@@ -44,8 +44,6 @@ class RecruiterProfileBody extends Component {
                         </tbody>
                     </Table>
                 </Tab>
-                <Tab eventKey="test" title="test">
-                </Tab>
             </Tabs>
         )
     }
