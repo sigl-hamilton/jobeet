@@ -23,7 +23,7 @@ class NavBar extends Component {
 
         return (
             <Navbar bg="dark" variant="dark" expand="lg" style={{marginBottom: "10px"}}>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand href="#home">JobEeT</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
