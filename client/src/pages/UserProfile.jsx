@@ -20,6 +20,10 @@ class UserProfile extends Component {
     }
 
     componentDidMount = async () => {
+        this.loadUser();
+    };
+
+    loadUser = async() => {
         this.setState({ isLoading: true });
         if (this.state.userType === "CANDIDATE") {
             await api.getCandidateById(this.state.idUser).then(user => {
@@ -36,8 +40,7 @@ class UserProfile extends Component {
                 });
             });
         }
-
-    };
+    }
 
     render() {
         const { user, isLoading } = this.state;
@@ -45,9 +48,9 @@ class UserProfile extends Component {
         if (!user) { showTable = false; };
         let profile;
         if (showTable && user.user_type === 'CANDIDATE') {
-            profile = <CandidateProfile user={user}/>
+            profile = <CandidateProfile user={user} currentUser={this.props.currentUser}/>
         } else if (showTable && user.user_type === 'RECRUITER') {
-            profile = <RecruiterProfile user={user}/>
+            profile = <RecruiterProfile user={user} currentUser={this.props.currentUser}/>
         }
 
         return (

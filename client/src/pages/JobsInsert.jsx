@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import api from '../api'
+import {Link} from 'react-router-dom';
 
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -16,7 +17,8 @@ class JobsInsert extends Component {
             description: '',
             labels: '',
             selectedLabels: [],
-            optionLabels: {}
+            optionLabels: {},
+            isLoading: true
         };
     };
 
@@ -33,9 +35,13 @@ class JobsInsert extends Component {
     };
 
     componentDidMount = async () => {
+        this.setState({isLoading: true});
         await api.getLabels().then( labels=> {
             const allOptionLabels = this.formatOptionLabels(labels.data.data);
-            this.setState({optionLabels : allOptionLabels});
+            this.setState({
+                isLoading: false,
+                optionLabels : allOptionLabels
+            });
         });
     };
 
@@ -63,6 +69,8 @@ class JobsInsert extends Component {
     };
 
     render() {
+        if(this.state.isLoading)
+            return <Container />
         return (
             <Container>
                 <h1>Create Job</h1>
@@ -92,18 +100,28 @@ class JobsInsert extends Component {
                     </Form.Row>
                     <Form.Group controlId="labels">
                         <Form.Label>Skills</Form.Label>
-                        <Select
-                            closeMenuOnSelect={false}
-                            isMulti
-                            options={this.state.optionLabels}
-                            onChange={this.handleSelectChange}
-                            value={this.state.selectedLabels}
-                        />
+                        {
+                            this.state.optionLabels && this.state.optionLabels.length !== 0 ?
+                            <Select
+                                closeMenuOnSelect={false}
+                                isMulti
+                                options={this.state.optionLabels}
+                                onChange={this.handleSelectChange}
+                                value={this.state.selectedLabels}
+                            /> : null
+                        }
                     </Form.Group>
+                    <Link to={{ pathname: '/label/create'}}
+                        className="btn btn-light" variant="light">
+                        Add skill
+                    </Link>
                     <Button variant="dark" onClick={this.onSubmit}>
                         Add a job
                     </Button>
-                    <Button style={{marginLeft:'10px'}} variant="light" href={'/user/' + this.state}>Cancel</Button>
+                    <Link to={{ pathname: '/user/' + this.state.user._id, state: { user_type: this.state.user.user_type }}}
+                        className="btn btn-light" variant="light">
+                        Cancel
+                    </Link>
                 </Form>
             </Container>
         )

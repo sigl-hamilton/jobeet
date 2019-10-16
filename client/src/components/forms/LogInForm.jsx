@@ -26,6 +26,7 @@ class LogInForm extends Component {
         };
         api.login(userData).then(res => {
             window.alert(`User logged`);
+            this.props.refreshUser(res.data.data);
         });
     };
 

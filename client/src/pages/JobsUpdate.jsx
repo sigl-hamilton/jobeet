@@ -53,8 +53,7 @@ class JobsUpdate extends Component {
         api.updateJobById(this.state.id, payload).then(res => {
             window.alert(`Job updated successfully`);
             this.props.history.push({
-                pathname: '/user/' + this.state.user._id,
-                state: {user: this.state.user.user_type}
+                pathname: '/job/' + this.state.id,
             });
         });
     };

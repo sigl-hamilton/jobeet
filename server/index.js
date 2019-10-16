@@ -91,7 +91,6 @@ server = app.listen(apiPort, () => console.log(`Server running on port ${apiPort
 io = socket(server);
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
 
     socket.on('SEND_MESSAGE', function(payload){
         io.emit('RECEIVE_MESSAGE', payload);

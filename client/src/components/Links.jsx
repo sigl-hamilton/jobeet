@@ -26,6 +26,7 @@ class Links extends Component {
 
     render() {
         const currentUser = this.props.currentUser;
+        const user_type = currentUser ? currentUser.user_type : null;
 
         return (
         <List>
@@ -49,26 +50,23 @@ class Links extends Component {
                 <Link to="/jobs/list" className="nav-link">
                     Jobs
                 </Link>
+                <Item>
                 {
-                    currentUser.user_type != "CANDIDATE" || "ADMIN" ?
-                    <Item>
-                        <Link to="/user/list" className="nav-link">
-                            User list
-                        </Link>
-                        <Link to="/candidate/list" className="nav-link">
-                            Candidate List
-                        </Link>
-                        <Link to="/label/create" className="nav-link">
-                            Label Create
-                        </Link>
-                        <Link to="/label/list" className="nav-link">
-                            Label List
-                        </Link>
-                        <Link to="/company/list" className="nav-link">
-                            Company List
-                        </Link>
-                    </Item>: null
+                    user_type === "ADMIN" ?
+                    <Link to="/user/list" className="nav-link">
+                        User list
+                    </Link> : null
                 }
+                {
+                    user_type === "RECRUITER" || user_type === "ADMIN" ?
+                    <Link to="/candidate/list" className="nav-link">
+                        Candidate List
+                    </Link> : null
+                }
+                <Link to="/company/list" className="nav-link">
+                    Company List
+                </Link>
+                </Item>
             </Item> : null
         }
         </List>

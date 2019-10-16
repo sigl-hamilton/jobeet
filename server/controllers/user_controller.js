@@ -192,12 +192,12 @@ updateRecruiter = (id, body, res) => {
 
         user.save().then(() => {
                 if (user.company && (user.company._id !== oldCompany._id)) {
-                        CompanySchema.findById(body.company._id, (err, company) => {
-                            company.recruiters.push({_id: user._id});
-                            company.save();
-                        });
                         CompanySchema.findById(oldCompany._id, (err, company) => {
                             company.recruiters.pull({_id: user._id});
+                            company.save();
+                        });
+                        CompanySchema.findById(body.company._id, (err, company) => {
+                            company.recruiters.push({_id: user._id});
                             company.save();
                         });
                     }

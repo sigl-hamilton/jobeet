@@ -93,7 +93,7 @@ class ChatPage extends Component {
 
         return (
             <Container>
-                <h1>Chatting with {this.state.userTo.firstname}</h1>
+                <h1>Chatting with {this.state.userFrom.firstname} {this.state.userFrom.lastname}</h1>
                 <Row style={{height: '280px'}}>
                 </Row>
                     {discussion}
