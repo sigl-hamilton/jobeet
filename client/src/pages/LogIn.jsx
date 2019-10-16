@@ -30,7 +30,7 @@ class LogIn extends Component {
         const { errors } = this.state;
         return (
             <div className="container">
-                <LogInForm signUpLinkAvailable />
+                <LogInForm signUpLinkAvailable refreshUser={this.props.refreshUser} />
             </div>
         );
     };

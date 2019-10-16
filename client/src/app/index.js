@@ -29,6 +29,7 @@ class App extends Component {
     }
 
     refreshUser = (currentUser) => {
+        console.log("here")
         this.setState({
             currentUser
         });
@@ -47,7 +48,7 @@ class App extends Component {
             <Router>
                 <NavBar currentUser={this.state.currentUser} refreshUser={this.refreshUser}/>
                 <Switch>
-                    <Route path="/" exact component={Home} />
+                    <Route path="/" exact render={(props) => <Home {...props} refreshUser={this.refreshUser} />} />
                     <Route path="/signup" exact component={SignUp} />
                     <Route path="/login" exact render={(props) => <LogIn {...props} refreshUser={this.refreshUser} />}/>
                     <Route path="/jobs/list" exact component={JobsList} />

@@ -32,7 +32,7 @@ class Home extends Component {
                     <div className="col-6 mt-5">
                         <Row>
                             <div className="col-6 mt-3">
-                                <LogInForm />
+                                <LogInForm refreshUser={this.props.refreshUser} />
                             </div>
                             <div className="col-6 mt-3">
                                 <SignUpForm />
