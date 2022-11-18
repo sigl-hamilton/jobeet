@@ -24,7 +24,7 @@
     "react-number-format": "^4.3.0",
     "react-phone-number-input": "^2.3.24",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "5.0.1",
     "react-select": "^3.0.8",
     "react-table": "^6.10.2",
     "react-truncate": "^2.4.0",
